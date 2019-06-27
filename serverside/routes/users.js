@@ -23,3 +23,5 @@ router.post('/', async function (req, res, next) {
     let result = await pool.query(insertQuery); 
     res.json(result); 
 }); 
+
+module.exports = router;

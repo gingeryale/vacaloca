@@ -24,3 +24,19 @@ router.post('/', async function (req, res, next) {
     let result = await pool.query(insertQuery); 
     res.json(result); 
 }); 
+
+
+// all user vacation combos
+router.get('/follow', async function (req, res, next) { 
+    let result = await pool.query(`SELECT * FROM travel.uservaca WHERE id=${req.params.id}`); 
+    res.json(result); 
+}); 
+
+
+// user vacation combo bu vacation id
+router.get('/follow/:id', async function (req, res, next) { 
+    let result = await pool.query(`SELECT * FROM travel.uservaca WHERE id=${req.params.id}`); 
+    res.json(result); 
+}); 
+
+module.exports = router;
