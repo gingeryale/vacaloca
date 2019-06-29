@@ -13,25 +13,38 @@ class AddVac extends Component {
        <input name="price" onChange={this.handleChange.bind(this)} placeholder="price"/>
        <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in"/>
        <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out"/>
-        <button onClick={this.sendDataRedux.bind(this)}>Add</button>
+        <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
       </div>
     );
   }
+  
   handleChange(e){
       this.setState({[e.target.name]: e.target.value})
   }
-  sendDataRedux(){
-      var newVacaObj = this.state;
-      this.props.addVacation(newVacaObj);
+ 
+}
+
+
+function mapDispatchToProps(dispatch){
+  return{
+    saveData: function(vaca){
+      return dispatch(saveVacaToServer(vaca))
+    }
   }
 }
 
-const mapDispatchToProps = function(dispatch){
-    return {
-        addVacation: function(newVacaObj){
-            dispatch({type:"ADD", data:newVacaObj})
-        }
-    };
+function saveVacaToServer(vaca) {
+  return async function (dispatch) {
+    let r = await fetch('http://localhost:3000/api/vacations', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(vaca)
+    });
+    const content = await r.json();
+  }
 }
 
 const addVac = connect(null, mapDispatchToProps)(AddVac);

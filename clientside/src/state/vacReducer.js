@@ -22,8 +22,11 @@ const vacReducer = (state = initializeState, action) => {
                 allVac:newVacationArr
             }
             return newState;
-        case 'CHANGE':
-                return newState;
+        case 'GET_VACAS':
+            newState=Object.assign({}, state,{
+                allVac:action.data
+            })
+            return newState;
         default:
             return state;
     }

@@ -11,11 +11,11 @@ class AVac extends Component {
     return (
       <div className="vaca">
         <Buttons login={this.state.isLoggedin}/>
-        <h5>{this.props.vac.destination}</h5>
-        <p>{this.props.vac.desc}</p>
-        <p>{this.props.vac.checkin}</p>
-        <p>{this.props.vac.checkout}</p>
-        <p>{this.props.vac.price}</p>
+        <h5>{this.props.vac.vac_destination}</h5>
+        <p>{this.props.vac.vac_desc}</p>
+        <p>{this.props.vac.vac_checkin}</p>
+        <p>{this.props.vac.vac_checkout}</p>
+        <p>{this.props.vac.vac_price}</p>
       </div>
     );
   }
