@@ -8,9 +8,11 @@ class AddVac extends Component {
   render() {
     return (
       <div className="form">
-       <input name="name" onChange={this.handleChange.bind(this)} placeholder="name"/>
+       <input name="destination" onChange={this.handleChange.bind(this)} placeholder="name"/>
        <input name="desc" onChange={this.handleChange.bind(this)} placeholder="desc"/>
-       <input name="id" onChange={this.handleChange.bind(this)} placeholder="id"/>
+       <input name="price" onChange={this.handleChange.bind(this)} placeholder="price"/>
+       <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in"/>
+       <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out"/>
         <button onClick={this.sendDataRedux.bind(this)}>Add</button>
       </div>
     );
