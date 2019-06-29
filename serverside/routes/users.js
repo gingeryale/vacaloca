@@ -33,7 +33,7 @@ router.get('/follow/all', async function (req, res, next) {
 }); 
 
 // POST new vacation subscriber
-router.post('/follow', async function (req, res, next) { 
+router.post('/subs', async function (req, res, next) { 
     let insertQuery= `INSERT INTO  travel.subscribers (uid, vid) 
     VALUES (${req.body.uid},${req.body.vid})`; 
     let result = await pool.query(insertQuery); 
@@ -42,11 +42,37 @@ router.post('/follow', async function (req, res, next) {
 
 
 // get grouped by vacation count
-router.get('/follow/count', async function (req, res, next) { 
-    let result = await pool.query(`SELECT vid,COUNT(*) as vcount 
+router.get('/subs/rawcount', async function (req, res, next) { 
+    let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
     FROM travel.subscribers 
     GROUP BY vid 
-    ORDER BY vid DESC`); 
+    ORDER BY vcount DESC`); 
     res.json(result); 
 }); 
+
+// get names of vactions with 1 value for null
+router.get('/subs/report1', async function (req, res, next) { 
+    let result = await pool.query(`SELECT vacations.vac_destination, vacations.id, 
+    count(*) as number_of_followers 
+    from travel.vacations 
+    left join travel.subscribers on (vacations.id = subscribers.vid) 
+    group by vacations.vac_destination
+    ORDER BY number_of_followers DESC`); 
+    res.json(result); 
+}); 
+
+// get names of vactions
+router.get('/subs/report', async function (req, res, next) { 
+    let result = await pool.query(`SELECT 
+    vacations.id, vacations.vac_destination, count(subscribers.vid) as trending 
+    from travel.subscribers left join travel.vacations on 
+    (subscribers.vid = vacations.id) 
+    group by travel.vacations.vac_destination 
+    ORDER BY trending DESC`); 
+    res.json(result); 
+}); 
+
+
+
+
 module.exports = router;
