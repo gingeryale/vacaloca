@@ -18,25 +18,12 @@ router.get('/:id', async function (req, res, next) {
 
 // add new vacation
 router.post('/', async function (req, res, next) { 
-    let insertQuery= ` INSERT INTO  travel.vacations (vaca_desc, vaca_price, vaca_in, vaca_out, vaca_img) 
-    VALUES ('${req.body.vaca_desc}','${req.body.vaca_price}','${req.body.vaca_in}',
-    '${req.body.vaca_out}', '${req.body.vaca_img}')`; 
+    let insertQuery= ` INSERT INTO  travel.vacations (vac_destination,vac_desc,vac_price,vac_checkin,vac_checkout, vac_img) 
+    VALUES ('${req.body.destination}','${req.body.desc}',${req.body.price},'${req.body.checkin}',
+    '${req.body.checkout}', '${req.body.img}')`; 
     let result = await pool.query(insertQuery); 
     res.json(result); 
 }); 
 
-
-// all user vacation combos
-router.get('/follow', async function (req, res, next) { 
-    let result = await pool.query(`SELECT * FROM travel.uservaca WHERE id=${req.params.id}`); 
-    res.json(result); 
-}); 
-
-
-// user vacation combo bu vacation id
-router.get('/follow/:id', async function (req, res, next) { 
-    let result = await pool.query(`SELECT * FROM travel.uservaca WHERE id=${req.params.id}`); 
-    res.json(result); 
-}); 
 
 module.exports = router;

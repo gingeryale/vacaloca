@@ -20,18 +20,19 @@ var myDbHelper = {
                 console.log(data);
             });
             let createVacations = `CREATE TABLE IF NOT EXISTS travel.vacations (id INT(11) AUTO_INCREMENT PRIMARY KEY, 
-                vaca_desc VARCHAR(128), vaca_price INT(16), vaca_in VARCHAR(16), 
-                vaca_out VARCHAR(16), vaca_img LONGBLOB)`;
+                vac_destination VARCHAR(16), vac_desc VARCHAR(128), vac_price INT(16), vac_checkin VARCHAR(16), 
+                vac_checkout VARCHAR(16), vac_img LONGBLOB)`;
             pool.query(createVacations).then(data => {
                 console.log(data);
             });
-            let createCombo = `CREATE TABLE IF NOT EXISTS travel.uservaca (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                uid INT(11),
-                vid INT(11),
-                FOREIGN KEY (uid) REFERENCES travel.users (id)
-                )`;
-            pool.query(createCombo).then(data => {
+            let createSubs = `CREATE TABLE IF NOT EXISTS travel.subscribers 
+            (id INT(11) AUTO_INCREMENT PRIMARY KEY,
+            uid int,
+            vid int,
+            FOREIGN KEY (uid) REFERENCES travel.users(id),
+            FOREIGN KEY (vid) REFERENCES travel.vacations(id)
+             )`;
+            pool.query(createSubs).then(data => {
                 console.log(data);
             });
         }); 

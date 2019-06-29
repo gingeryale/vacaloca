@@ -24,4 +24,29 @@ router.post('/', async function (req, res, next) {
     res.json(result); 
 }); 
 
+
+
+// GET all subs
+router.get('/follow/all', async function (req, res, next) { 
+    let result = await pool.query(`SELECT * FROM travel.subscribers`); 
+    res.json(result); 
+}); 
+
+// POST new vacation subscriber
+router.post('/follow', async function (req, res, next) { 
+    let insertQuery= `INSERT INTO  travel.subscribers (uid, vid) 
+    VALUES (${req.body.uid},${req.body.vid})`; 
+    let result = await pool.query(insertQuery); 
+    res.json(result); 
+}); 
+
+
+// get grouped by vacation count
+router.get('/follow/count', async function (req, res, next) { 
+    let result = await pool.query(`SELECT vid,COUNT(*) as vcount 
+    FROM travel.subscribers 
+    GROUP BY vid 
+    ORDER BY vid DESC`); 
+    res.json(result); 
+}); 
 module.exports = router;
