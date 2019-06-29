@@ -1,5 +1,13 @@
-const vacReducer = 
-(state ={date:new Date(), allVac:[{name:"isr", id:1, desc:"summer heat all the time"}], following:[]}, action) =>{
+const initializeState={
+    date: new Date(),
+    allVac: [{
+        id:0,
+        name:"destination vacation",
+        desc:"best dest"
+    }],
+    following:[]
+}
+const vacReducer = (state = initializeState, action) => {
     switch(action.type){
         case 'ADD':
             let newVacationArr=[...state.allVac];
