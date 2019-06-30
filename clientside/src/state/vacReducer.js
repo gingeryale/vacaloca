@@ -14,7 +14,7 @@ const initializeState={
 }
 const vacReducer = (state = initializeState, action) => {
     switch(action.type){
-        case 'ADD':
+        case 'ADD_VACA':
             let newVacationArr=[...state.allVac];
             newVacationArr.push(action.data);
             let newState={
