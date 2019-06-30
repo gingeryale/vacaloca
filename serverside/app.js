@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var meetVaca = require('./routes/vacations');
@@ -11,6 +11,12 @@ myDbHelper.createDBAndTables();
 
 
 var app = express();
+app.use(session({
+    secret: 'vacaloca',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }))
 
 app.use(logger('dev'));
 app.use(express.json());

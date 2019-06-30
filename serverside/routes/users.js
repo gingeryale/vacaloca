@@ -4,62 +4,100 @@ var myDbHelper = require('../helps/db');
 
 var pool= myDbHelper.myPool;
 
+// login cookie
+router.post('/login', async function (req, res, next) { 
+    let result = await pool.query(`SELECT * FROM travel.users WHERE user.name = ${req.body.user}`);
+    if(result.length > 0){
+        req.session.user = results[0];
+        res.json(result); // msg:"connected"
+    } else {
+        res.json({msg:"not connected"});
+    }
+   
+});
+
 // get all users
 router.get('/', async function (req, res, next) { 
-    let result = await pool.query('SELECT * FROM travel.users'); 
-    res.json(result); 
+    if(req.session.user.name='ADMIN'){
+        let result = await pool.query('SELECT * FROM travel.users'); 
+        res.json(result); 
+    } else {
+        res.redirect('/login');
+    }
+   
 }); 
 
 // user by id
 router.get('/:id', async function (req, res, next) { 
+    if(req.session.user.name='ADMIN'){
     let result = await pool.query(`SELECT * FROM travel.users WHERE id=${req.params.id}`); 
     res.json(result); 
+    } else {
+        res.redirect('/login');
+    }
 }); 
 
-// add new user
-router.post('/', async function (req, res, next) { 
+// add register new user
+router.post('/register', async function (req, res, next) { 
     let insertQuery= ` INSERT INTO  travel.users (user_fname, user_lname, user_name, user_pass) 
     VALUES ('${req.body.fname}','${req.body.lname}','${req.body.name}','${req.body.pass}')`; 
     let result = await pool.query(insertQuery); 
-    res.json(result); 
+    if(result){
+       req.session.user = results[0];
+        res.json(result);  
+    } else{
+        req.json({msg:"not connected yet"})
+    }
+    
 }); 
 
 
 
 // GET all subs
 router.get('/follow/all', async function (req, res, next) { 
+    if(req.session.user.name='ADMIN'){
     let result = await pool.query(`SELECT * FROM travel.subscribers`); 
-    res.json(result); 
+    res.json(result); } else {
+        res.redirect('/login');
+    }
 }); 
 
 // POST new vacation subscriber
 router.post('/subs', async function (req, res, next) { 
+    if(req.session.user.name='ADMIN'){
     let insertQuery= `INSERT INTO  travel.subscribers (uid, vid) 
     VALUES (${req.body.uid},${req.body.vid})`; 
     let result = await pool.query(insertQuery); 
     res.json(result); 
+    } else {
+        res.redirect('/login');
+    }
 }); 
 
 
 // get grouped by vacation count
 router.get('/subs/rawcount', async function (req, res, next) { 
+    if(req.session.user.name='ADMIN'){
     let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
     FROM travel.subscribers 
     GROUP BY vid 
     ORDER BY vcount DESC`); 
     res.json(result); 
+    } else {
+        res.redirect('/login');
+    }
 }); 
 
 // get names of vactions with 1 value for null
-router.get('/subs/report1', async function (req, res, next) { 
-    let result = await pool.query(`SELECT vacations.vac_destination, vacations.id, 
-    count(*) as number_of_followers 
-    from travel.vacations 
-    left join travel.subscribers on (vacations.id = subscribers.vid) 
-    group by vacations.vac_destination
-    ORDER BY number_of_followers DESC`); 
-    res.json(result); 
-}); 
+// router.get('/subs/report1', async function (req, res, next) { 
+//     let result = await pool.query(`SELECT vacations.vac_destination, vacations.id, 
+//     count(*) as number_of_followers 
+//     from travel.vacations 
+//     left join travel.subscribers on (vacations.id = subscribers.vid) 
+//     group by vacations.vac_destination
+//     ORDER BY number_of_followers DESC`); 
+//     res.json(result); 
+// }); 
 
 // get names of vactions
 router.get('/subs/report', async function (req, res, next) { 
