@@ -14,7 +14,7 @@ const initializeState={
 }
 const vacReducer = (state = initializeState, action) => {
     switch(action.type){
-        case 'ADD_VACA':
+        case 'ADD_VAC':
             let newVacationArr=[...state.allVac];
             newVacationArr.push(action.data);
             let newState={
@@ -27,7 +27,16 @@ const vacReducer = (state = initializeState, action) => {
                 allVac:action.data
             })
             return newState;
+            case 'LOGIN':
+            if(action.data.msg=="OK"){
+                newState={
+                    isLoggedIn:true
+                }
+            }
+                
+            return newState;
         default:
+            
             return state;
     }
 

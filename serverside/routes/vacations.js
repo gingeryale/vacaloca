@@ -18,7 +18,7 @@ router.get('/:id', async function (req, res, next) {
 
 // add new vacation
 router.post('/', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.user=[0]){
     let insertQuery= ` INSERT INTO  travel.vacations (vac_destination,vac_desc,vac_price,vac_checkin,vac_checkout, vac_img) 
     VALUES ('${req.body.destination}','${req.body.desc}',${req.body.price},'${req.body.checkin}',
     '${req.body.checkout}', '${req.body.img}')`; 

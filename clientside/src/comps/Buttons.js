@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
-import Buttons from './Buttons'
+import {connect} from 'react-redux';
 
 
-class AVac extends Component {
+class Buttons extends Component {
   
   render() {
     return (
@@ -17,4 +17,4 @@ class AVac extends Component {
 
 
 
-export default AVac;
+export default Buttons;

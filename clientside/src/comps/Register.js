@@ -11,7 +11,7 @@ class Register extends Component {
        <input name="lname" onChange={this.handleChange.bind(this)} placeholder="lastname"/>
        <input name="name" onChange={this.handleChange.bind(this)} placeholder="username"/>
        <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password"/>
-        <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
+        <button onClick={this.props.saveData.bind(this, this.state)}>Register</button>
       </div>
     );
   }
@@ -25,21 +25,21 @@ class Register extends Component {
 
 function mapDispatchToProps(dispatch){
   return{
-    saveData: function(loginData){
-      return dispatch(saveVacaToServer(loginData))
+    saveData: function(regData){
+      return dispatch(saveVacaToServer(regData))
     }
   }
 }
 
-function saveVacaToServer(loginData) {
+function saveVacaToServer(regData) {
   return async function (dispatch) {
-    let r = await fetch('http://localhost:3000/api/users/login', {
+    let r = await fetch('http://localhost:3000/api/users/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(loginData)
+      body: JSON.stringify(regData)
     });
     const content = await r.json();
   }

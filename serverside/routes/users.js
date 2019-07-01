@@ -5,20 +5,35 @@ var myDbHelper = require('../helps/db');
 var pool= myDbHelper.myPool;
 
 // login cookie
-router.post('/login', async function (req, res, next) { 
-    let result = await pool.query(`SELECT * FROM travel.users WHERE user.name = ${req.body.user}`);
-    if(result.length > 0){
-        req.session.user = results[0];
-        res.json(result); // msg:"connected"
-    } else {
-        res.json({msg:"not connected"});
-    }
+//router.post('/login', async function (req, res, next) { 
+//    let result = await pool.query(`SELECT * FROM travel.users WHERE user.name = ${req.body.user}`);
+//    if(result.length > 0){
+//        req.session.user = results[0];
+//        res.json(result); // msg:"connected"
+//    } else {
+//        res.json({msg:"not connected"});
+//    }
    
-});
+//});
+
+router.post('/login', async (req, res, next)=> {
+    console.log(req.body);
+    let name=req.body.name;
+    let pass=req.body.pass;
+    let userArr = 
+    await pool.query(`SELECT * FROM travel.users WHERE user_name='${name}' AND user_pass='${pass}'`); 
+    if(userArr.length > 0){
+        req.session.liveConnect = userArr[0];
+        res.json({msg:"OK"});
+    }else{
+        res.json({msg:"CONNECTION NOT OK"});
+    }
+}); 
+
 
 // get all users
 router.get('/', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.user){
         let result = await pool.query('SELECT * FROM travel.users'); 
         res.json(result); 
     } else {
@@ -29,7 +44,7 @@ router.get('/', async function (req, res, next) {
 
 // user by id
 router.get('/:id', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.user){
     let result = await pool.query(`SELECT * FROM travel.users WHERE id=${req.params.id}`); 
     res.json(result); 
     } else {
@@ -55,7 +70,7 @@ router.post('/register', async function (req, res, next) {
 
 // GET all subs
 router.get('/follow/all', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.user){
     let result = await pool.query(`SELECT * FROM travel.subscribers`); 
     res.json(result); } else {
         res.redirect('/login');
@@ -77,7 +92,7 @@ router.post('/subs', async function (req, res, next) {
 
 // get grouped by vacation count
 router.get('/subs/rawcount', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.user='ADMIN'){
     let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
     FROM travel.subscribers 
     GROUP BY vid 

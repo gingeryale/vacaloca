@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var meetVaca = require('./routes/vacations');
 var myDbHelper = require('./helps/db');
+var cors = require('cors');
 myDbHelper.createDBAndTables();
 
 
@@ -16,7 +17,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-  }))
+  }));
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,23 +1,120 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
+import {connect} from 'react-redux';
 import Allvac from './comps/AllVac';
 import AddVac from './comps/AddVac';
+import Login from './comps/Login';
+import Register from './comps/Register';
+import Footer from './comps/Footer';
 
 
-class App extends Component {
+
+class App extends Component {  
+  
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to VacationState</h2>
+    if(this.props.isLoggedIn){
+      return (
+
+        <div className="container-fluid">
+        <div className="row">
+        <Router>
+                    <div>
+                        <ul>
+                        <li>
+                                <Link to="/vacations">All Vaca</Link>
+                            </li>
+                            <li>
+                                <Link to="/Login">Logout</Link>
+                            </li>
+                            <li>
+                                <Link to="/addvacation">Add Vaca</Link>
+                            </li>
+                        </ul>
+
+                       
+                        <Route path='/vacations' render={(props) => 
+                        <Allvac {...props}/>}/>
+
+                        <Route path='/addvacation' render={(props) => 
+                        <AddVac {...props}/>}/>
+
+                        <Route path='/login' render={(props) => <Login {...props} />}/>
+
+                        
+
+                    </div>
+                </Router>
+       
+           
+               
+                <Footer/>
+           
         </div>
-        <AddVac />
-        <Allvac />
+    </div>
+      
+             
+      
+      );
+    }
+
+    else {
+      return(
+
+        
+
+          <div className="container-fluid">
+          <div className="row">
+              <Router>
+                    <div>
+                        <ul>
+                        <li>
+                                <Link to="/vacations">All Vaca</Link>
+                            </li>
+                            <li>
+                                <Link to="/login">Login</Link>
+                            </li>
+                            <li>
+                                <Link to="/register">Register</Link>
+                            </li>
+                        </ul>
+
+                        
+                        <Route path='/vacations' render={(props) => 
+                        <Allvac {...props}/>}/>
+
+                        <Route path='/login' render={(props) => <Login {...props} />}/>
+                        <Route path='/register' render={(props) => <Register {...props} />}/>
+
+                        
+
+                    </div>
+                </Router>
+         
+             
+                 
+                  <Footer/>
+      
+          </div>
       </div>
-    );
+        
+               
+        
+        );
+    
+    }
+   
+
+    
+    
   }
+
 }
 
-export default App;
+const mapStateToProps = function(state){
+  return {isLoggedIn:state.isLoggedIn};
+}
+
+const app = connect(mapStateToProps, null)(App);
+export default app;
