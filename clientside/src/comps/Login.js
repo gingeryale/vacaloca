@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 
 
 class Login extends Component {
+  constructor(props){
+    super();
+  }
   render() {
     return (
       <div className="form">
@@ -45,7 +48,7 @@ function sendLogin(loginData) {
     console.log(content);
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});
-        this.props.history.push('/');
+        this.props.history.push('/vacations');
     }else{
       this.props.history.push('/login');
     }

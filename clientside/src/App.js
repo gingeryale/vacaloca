@@ -40,7 +40,8 @@ class App extends Component {
                         <Route path='/addvacation' render={(props) => 
                         <AddVac {...props}/>}/>
 
-                        <Route path='/login' render={(props) => <Login {...props} />}/>
+                        <Route path='/login' render={(props) => <Login {...props} 
+                        history={this.props.history}/>}/>
 
                         
 
@@ -84,7 +85,8 @@ class App extends Component {
                         <Route path='/vacations' render={(props) => 
                         <Allvac {...props}/>}/>
 
-                        <Route path='/login' render={(props) => <Login {...props} />}/>
+                        <Route path='/login' render={(props) => <Login {...props} 
+                        history={this.props.history}/>}/>
                         <Route path='/register' render={(props) => <Register {...props} />}/>
 
                         

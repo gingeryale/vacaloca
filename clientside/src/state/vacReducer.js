@@ -9,7 +9,7 @@ const initializeState={
         checkout:0
     }],
     following:[],
-    isLoggedIn: false,
+    isLoggedIn: true,
     isAdmin: false
 }
 const vacReducer = (state = initializeState, action) => {
@@ -19,22 +19,35 @@ const vacReducer = (state = initializeState, action) => {
             newVacationArr.push(action.data);
             let newState={
                 date: new Date(),
+                isLoggedIn:true,
                 allVac:newVacationArr
             }
             return newState;
         case 'GET_VACAS':
             newState=Object.assign({}, state,{
-                allVac:action.data
+                allVac:action.data,
+                date: new Date(),
+                isLoggedIn: action.data
             })
             return newState;
             case 'LOGIN':
             if(action.data.msg=="OK"){
                 newState={
-                    isLoggedIn:true
+                    isLoggedIn:true,
+                    allVac:action.data
                 }
             }
                 
             return newState;
+            case 'REG':
+                if(action.data.msg=="OK"){
+                    newState={
+                        isLoggedIn:true,
+                        allVac:action.data
+                    }
+                }
+                    
+                return newState;
         default:
             
             return state;

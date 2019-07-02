@@ -42,7 +42,16 @@ function saveVacaToServer(regData) {
       body: JSON.stringify(regData)
     });
     const content = await r.json();
-  }
+    console.log(content);
+    if(content.msg=="OK"){
+      dispatch({type:"REG", data: content});
+        this.props.history.push({
+          pathname: '/vacations',
+        });
+    }else{
+      this.props.history.push('/login');
+    }
+  }      
 }
 
 const register = connect(null, mapDispatchToProps)(Register);

@@ -23,17 +23,41 @@ router.post('/login', async (req, res, next)=> {
     let userArr = 
     await pool.query(`SELECT * FROM travel.users WHERE user_name='${name}' AND user_pass='${pass}'`); 
     if(userArr.length > 0){
-        req.session.liveConnect = userArr[0];
+        req.session.connectedUser = userArr[0];
         res.json({msg:"OK"});
     }else{
-        res.json({msg:"CONNECTION NOT OK"});
+        res.json({msg:"NOT CONNECTED"});
+    }
+}); 
+
+// session cookie
+router.get('/api', async function (req, res, next) { 
+    if(req.session.connectedUser){
+        res.json({
+            id:req.session.connectedUser.id,
+            fname: req.session.connectedUser.user_fname,
+            username: req.session.connectedUser.user_name,
+            }); 
+    } else {
+        res.json({msg:"not connected"});
     }
 }); 
 
 
+// all DB usernames
+router.get('/check', async function (req, res, next) { 
+    if(req.session.connectedUser){
+        let result = await pool.query('SELECT user_name FROM  travel.users'); 
+        res.json(result); 
+    } else {
+        res.send('not connected');
+    }
+   
+}); 
+
 // get all users
 router.get('/', async function (req, res, next) { 
-    if(req.session.user){
+    if(req.session.connectedUser){
         let result = await pool.query('SELECT * FROM travel.users'); 
         res.json(result); 
     } else {
@@ -44,7 +68,7 @@ router.get('/', async function (req, res, next) {
 
 // user by id
 router.get('/:id', async function (req, res, next) { 
-    if(req.session.user){
+    if(req.session.connectedUser){
     let result = await pool.query(`SELECT * FROM travel.users WHERE id=${req.params.id}`); 
     res.json(result); 
     } else {
@@ -57,20 +81,14 @@ router.post('/register', async function (req, res, next) {
     let insertQuery= ` INSERT INTO  travel.users (user_fname, user_lname, user_name, user_pass) 
     VALUES ('${req.body.fname}','${req.body.lname}','${req.body.name}','${req.body.pass}')`; 
     let result = await pool.query(insertQuery); 
-    if(result){
-       req.session.user = results[0];
-        res.json(result);  
-    } else{
-        req.json({msg:"not connected yet"})
-    }
-    
+    res.json({msg:"OK"}); 
 }); 
 
 
 
 // GET all subs
 router.get('/follow/all', async function (req, res, next) { 
-    if(req.session.user){
+    if(req.session.connectedUser){
     let result = await pool.query(`SELECT * FROM travel.subscribers`); 
     res.json(result); } else {
         res.redirect('/login');
@@ -79,7 +97,7 @@ router.get('/follow/all', async function (req, res, next) {
 
 // POST new vacation subscriber
 router.post('/subs', async function (req, res, next) { 
-    if(req.session.user.name='ADMIN'){
+    if(req.session.connectedUser.name='ADMIN'){
     let insertQuery= `INSERT INTO  travel.subscribers (uid, vid) 
     VALUES (${req.body.uid},${req.body.vid})`; 
     let result = await pool.query(insertQuery); 
@@ -92,7 +110,7 @@ router.post('/subs', async function (req, res, next) {
 
 // get grouped by vacation count
 router.get('/subs/rawcount', async function (req, res, next) { 
-    if(req.session.user='ADMIN'){
+    if(req.session.connectedUser.name='ADMIN'){
     let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
     FROM travel.subscribers 
     GROUP BY vid 
