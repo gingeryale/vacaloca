@@ -6,27 +6,47 @@ import {connect} from 'react-redux';
 class Register extends Component {
   state={
     nameArr:[],
+    visible:false
   }
   render() {
     return (
       <div className="form">
-       <input name="fname" required onChange={this.handleChange.bind(this)} placeholder="firstname"/>
-       <input name="lname" required onChange={this.handleChange.bind(this)} placeholder="lastname"/>
-       <input name="name" required 
+       <input name="fname" onChange={this.handleChange.bind(this)} placeholder="firstname" required/>
+       
+       <input name="lname" onChange={this.handleChange.bind(this)} placeholder="lastname" required/>
+       
+       <input name="name" required
        onChange={this.handleChange.bind(this)} 
-       onBlur={this.once.bind(this)} 
+       onBlur={this.once.bind(this)}
        placeholder="username"/>
-       <span hidden={!this.state.showErr} className="error_taken">That name is already taken</span>
-       <input type="password" required name="pass" onChange={this.handleChange.bind(this)} placeholder="password"/>
-        <button disabled={!this.state.isUnique} onClick={this.props.saveData.bind(this, this.state)}>Register</button>
+       
+       <span hidden={!this.state.showErr} className="error_taken">username is not available</span>
+       
+       <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password" required/>
+        
+        <button disabled={!this.state.disabledState}
+        onClick={this.props.saveData.bind(this, this.state)}>Register</button>
+        <span hidden={!this.state.visible}>Error: Detected empty form fields</span>
       </div>
     );
   }
   
   handleChange(e){
-      this.setState({[e.target.name]: e.target.value})
+      this.setState({[e.target.name]: e.target.value.trim()})
   }
-
+ 
+validator(e){
+  var fields = document.querySelectorAll("input");
+  var maxFields = fields.length;
+     for(var i=0;i<maxFields;i++) {
+       if ((fields[i].value ==='') || (fields[i].value ===' '))
+       {
+          alert('required field can\'t be empty');
+          this.setState({disabledState:true});
+          return false;
+       }; 
+     };
+}
 
   async once()
   {
@@ -38,19 +58,34 @@ class Register extends Component {
       let dbArr = this.state.nameArr;
       let result = dbArr.filter(el => el.user_name == regname);
       if(result.length > 0){
-        this.setState({isUnique:false});
+        this.setState({disabledState:false});
         this.setState({showErr:true});
       } else {
-        this.setState({isUnique:true});
+        this.setState({disabledState:true});
+        this.setState({showErr:false});
       }
   }
+  
+
 }
+
 
 
 function mapDispatchToProps(dispatch){
   return{
     saveData: function(regData){
-      return dispatch(saveUserToServer(regData))
+      console.log(regData);
+      if((!regData.fname) || (!regData.lname) || (!regData.name) || (!regData.pass) ||
+      (regData.fname=="") || (regData.lname=="") || (regData.name=="") || (regData.pass==""))
+      {
+        alert ("error");
+        this.setState({disabledState:false});
+        this.setState({visible:true});
+      } else {
+        this.setState({disabledState:true});
+        this.setState({visible:false});
+        return dispatch(saveUserToServer(regData))
+      }
     }
   }
 }
