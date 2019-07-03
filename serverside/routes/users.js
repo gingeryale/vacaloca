@@ -46,12 +46,10 @@ router.get('/api', async function (req, res, next) {
 
 // all DB usernames
 router.get('/check', async function (req, res, next) { 
-    if(req.session.connectedUser){
+   
         let result = await pool.query('SELECT user_name FROM  travel.users'); 
         res.json(result); 
-    } else {
-        res.send('not connected');
-    }
+   
    
 }); 
 
