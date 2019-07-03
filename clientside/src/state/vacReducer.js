@@ -9,7 +9,7 @@ const initializeState={
         checkout:0
     }],
     following:[],
-    isLoggedIn: false,
+    isLoggedIn: true,
     isAdmin: false
 }
 const vacReducer = (state = initializeState, action) => {

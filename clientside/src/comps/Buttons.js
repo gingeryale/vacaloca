@@ -8,8 +8,13 @@ class Buttons extends Component {
   render() {
     return (
       <div className="buttons">
-        <button>admin</button>
-        <button>user</button>
+        <div>
+        <button>edit</button>
+        <button>x</button>
+        </div>
+        <div>
+        <button>F</button>
+        </div>
       </div>
     );
   }

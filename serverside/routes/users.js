@@ -30,6 +30,10 @@ router.post('/login', async (req, res, next)=> {
     }
 }); 
 
+router.get('/logout', function(req,res){
+    req.session.destroy();
+   });
+
 // session cookie
 router.get('/api', async function (req, res, next) { 
     if(req.session.connectedUser){

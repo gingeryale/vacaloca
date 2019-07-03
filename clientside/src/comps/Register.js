@@ -20,13 +20,13 @@ class Register extends Component {
        onBlur={this.once.bind(this)}
        placeholder="username"/>
        
-       <span hidden={!this.state.showErr} className="error_taken">username is not available</span>
+       <span hidden={!this.state.showErr} className="err err_taken">username is not available</span>
        
        <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password" required/>
         
         <button disabled={!this.state.disabledState}
         onClick={this.props.saveData.bind(this, this.state)}>Register</button>
-        <span hidden={!this.state.visible}>Error: Detected empty form fields</span>
+        <span className="err err_empty" hidden={!this.state.visible}>Error: Detected empty form fields</span>
       </div>
     );
   }
@@ -65,7 +65,7 @@ function mapDispatchToProps(dispatch){
       if((!regData.fname) || (!regData.lname) || (!regData.name) || (!regData.pass) ||
       (regData.fname=="") || (regData.lname=="") || (regData.name=="") || (regData.pass==""))
       {
-        alert ("error");
+        alert ("Error: All fields required");
         this.setState({disabledState:false});
         this.setState({visible:true});
       } else {

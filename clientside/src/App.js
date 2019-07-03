@@ -26,7 +26,7 @@ class App extends Component {
                                 <Link to="/vacations">All Vaca</Link>
                             </li>
                             <li>
-                                <Link to="/Login">Logout</Link>
+                                <Link to="/logout">Logout</Link>
                             </li>
                             <li>
                                 <Link to="/addvacation">Add Vaca</Link>
@@ -40,8 +40,7 @@ class App extends Component {
                         <Route path='/addvacation' render={(props) => 
                         <AddVac {...props}/>}/>
 
-                        <Route path='/login' render={(props) => <Login {...props} 
-                        history={this.props.history}/>}/>
+                        <Route path='/logout' render={(props) => <Login {...props} />}/>
 
                         
 
