@@ -34,19 +34,6 @@ class Register extends Component {
   handleChange(e){
       this.setState({[e.target.name]: e.target.value.trim()})
   }
- 
-validator(e){
-  var fields = document.querySelectorAll("input");
-  var maxFields = fields.length;
-     for(var i=0;i<maxFields;i++) {
-       if ((fields[i].value ==='') || (fields[i].value ===' '))
-       {
-          alert('required field can\'t be empty');
-          this.setState({disabledState:true});
-          return false;
-       }; 
-     };
-}
 
   async once()
   {
