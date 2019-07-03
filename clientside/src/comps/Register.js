@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 class Register extends Component {
   state={
-    nameArr:[]
+    nameArr:[],
   }
   render() {
     return (
@@ -16,8 +16,9 @@ class Register extends Component {
        onChange={this.handleChange.bind(this)} 
        onBlur={this.once.bind(this)} 
        placeholder="username"/>
+       <span hidden={!this.state.showErr} className="error_taken">That name is already taken</span>
        <input type="password" required name="pass" onChange={this.handleChange.bind(this)} placeholder="password"/>
-        <button onClick={this.props.saveData.bind(this, this.state)}>Register</button>
+        <button disabled={!this.state.isUnique} onClick={this.props.saveData.bind(this, this.state)}>Register</button>
       </div>
     );
   }
@@ -37,9 +38,10 @@ class Register extends Component {
       let dbArr = this.state.nameArr;
       let result = dbArr.filter(el => el.user_name == regname);
       if(result.length > 0){
-        console.log("erduplicate foundr")
+        this.setState({isUnique:false});
+        this.setState({showErr:true});
       } else {
-        console.log("all clear")
+        this.setState({isUnique:true});
       }
   }
 }
@@ -48,12 +50,12 @@ class Register extends Component {
 function mapDispatchToProps(dispatch){
   return{
     saveData: function(regData){
-      return dispatch(saveVacaToServer(regData))
+      return dispatch(saveUserToServer(regData))
     }
   }
 }
 
-function saveVacaToServer(regData) {
+function saveUserToServer(regData) {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/users/register', {
       method: 'POST',
@@ -75,19 +77,6 @@ function saveVacaToServer(regData) {
     }
   }      
 }
-
-
-// function contains(arr, b) {
-//   debugger;
-//   for (var i = 0; i < arr.length; i++) {
-//       if (arr[i].user_name == b) {
-//           return true;
-//       }
-//       else{
-//         return false;
-//       }
-//   }
-// }
 
 const register = connect(null, mapDispatchToProps)(Register);
 export default register;
