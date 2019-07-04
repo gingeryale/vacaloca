@@ -23,6 +23,15 @@ const vacReducer = (state = initializeState, action) => {
                 allVac:newVacationArr
             }
             return newState;
+        case 'EDIT_VAC':
+                newVacationArr=[...state.allVac];
+            newVacationArr.push(action.data);
+                newState={
+                date: new Date(),
+                isLoggedIn:true,
+                allVac:newVacationArr
+            }
+            return newState;
         case 'GET_VACAS':
             newState=Object.assign({}, state,{
                 allVac:action.data,
@@ -37,7 +46,6 @@ const vacReducer = (state = initializeState, action) => {
                     allVac:action.data
                 }
             }
-                
             return newState;
             case 'REG':
                 if(action.data.msg=="OK"){

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router,Route, Link, Switch } from "react-router-dom";
 import Allvac from './AllVac';
 import AddVac from './AddVac';
-import Login from './Login';
-import Register from './Register';
 import Footer from './Footer';
+import NoMatch from './404';
+import Login from './Login';
+import AdminEdit from './AdminEdit';
+
 
 
 class RouterAdmin extends Component {
@@ -22,22 +24,26 @@ class RouterAdmin extends Component {
                                 <Link to="/vacations">All Vaca</Link>
                             </li>
                             <li>
-                                <Link to="/logout">Logout</Link>
+                            <Link to="/logout" onClick={logout}>Logout Link</Link>
                             </li>
                             <li>
                                 <Link to="/addvacation">Add Vaca</Link>
                             </li>
                         </ul>
 
-                       
+                       <Switch>
                         <Route path='/vacations' render={(props) => 
                         <Allvac {...props}/>}/>
 
                         <Route path='/addvacation' render={(props) => 
                         <AddVac {...props}/>}/>
+                        <Route path='/login' render={(props) => <Login {...props} />}/>
 
-                        <Route path='/logout' render={(props) => <Login {...props} />}/>
-
+                        <Route path='/edit' render={(props) => 
+                        <AdminEdit {...props}/>}/>
+                        
+                        <Route component={NoMatch} />
+                </Switch>
                         
 
                     </div>
@@ -52,7 +58,11 @@ class RouterAdmin extends Component {
     );
   }
 }
-
+function logout(e) {
+  e.preventDefault(); // prevent page transition
+  fetch('http://localhost:3000/api/users/logout', { method: 'GET' }).then(() =>
+console.log('end')  )
+}
 
 
 export default RouterAdmin;
