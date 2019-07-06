@@ -1,63 +1,54 @@
-const initializeState={
+const initializeState = {
     date: new Date(),
     allVac: [{
-        id:0,
-        destination:"destination vacation",
-        desc:"best dest",
-        price:0,
-        checkin:0,
-        checkout:0
+        id: 0,
+        destination: "destination vacation",
+        desc: "best dest",
+        price: 0,
+        checkin: 0,
+        checkout: 0
     }],
-    following:[],
+    following: [],
     isLoggedIn: true,
     isAdmin: false
 }
 const vacReducer = (state = initializeState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case 'ADD_VAC':
-            let newVacationArr=[...state.allVac];
+            let newVacationArr = [...state.allVac];
             newVacationArr.push(action.data);
-            let newState={
+            let newState = {
                 date: new Date(),
-                isLoggedIn:true,
-                allVac:newVacationArr
-            }
-            return newState;
-        case 'EDIT_VAC':
-                newVacationArr=[...state.allVac];
-            newVacationArr.push(action.data);
-                newState={
-                date: new Date(),
-                isLoggedIn:true,
-                allVac:newVacationArr
+                isLoggedIn: true,
+                allVac: newVacationArr
             }
             return newState;
         case 'GET_VACAS':
-            newState=Object.assign({}, state,{
-                allVac:action.data,
+            newState = Object.assign({}, state, {
+                allVac: action.data,
                 date: new Date(),
                 isLoggedIn: action.data
             })
             return newState;
-            case 'LOGIN':
-            if(action.data.msg=="OK"){
-                newState={
-                    isLoggedIn:true,
-                    allVac:action.data
+        case 'LOGIN':
+            if (action.data.msg == "OK") {
+                newState = {
+                    isLoggedIn: true,
+                    allVac: action.data
                 }
             }
             return newState;
-            case 'REG':
-                if(action.data.msg=="OK"){
-                    newState={
-                        isLoggedIn:true,
-                        allVac:action.data
-                    }
+        case 'REG':
+            if (action.data.msg == "OK") {
+                newState = {
+                    isLoggedIn: true,
+                    allVac: action.data
                 }
-                    
-                return newState;
+            }
+
+            return newState;
         default:
-            
+
             return state;
     }
 

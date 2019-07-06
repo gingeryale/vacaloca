@@ -4,12 +4,13 @@ var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    connectionLimit: 10
+    connectionLimit: 10,
+    port: 3306
 });
 
- 
-var myDbHelper = { 
-    createDBAndTables: function () { 
+
+var myDbHelper = {
+    createDBAndTables: function () {
         pool.query(`CREATE DATABASE IF NOT EXISTS travel`).then(data => {
             console.log(data);
             let createUsers = `
@@ -35,11 +36,11 @@ var myDbHelper = {
             pool.query(createSubs).then(data => {
                 console.log(data);
             });
-        }); 
-    }, 
+        });
+    },
     myPool: pool
 }
- 
+
 module.exports = myDbHelper;
 
 

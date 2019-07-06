@@ -1,41 +1,50 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 
 class AdminEdit extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.vid = props.vid;
+
     console.log(this);
     console.log(props);
   }
-  state={
-    id: this.props.vid
+
+  state = {
+    id: this.props.match.params.id,
+    vaca: this.props.vacationsArray[1]
   }
+
+  componentDidMount() {
+    this.props.vacationsArray;
+  }
+
   render() {
     return (
       <div className="form">
-       <input name="destination" value={this.state.id} onChange={this.handleChange.bind(this)} placeholder="name"/>
-       <input name="desc" onChange={this.handleChange.bind(this)} placeholder="desc"/>
-       <input name="price" onChange={this.handleChange.bind(this)} placeholder="price"/>
-       <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in"/>
-       <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out"/>
+        <input name="destination" value={this.props.vacationsArray.destination} onChange={this.handleChange.bind(this)} placeholder="name" />
+        <input name="desc" onChange={this.handleChange.bind(this)} placeholder="desc" />
+        <input name="price" onChange={this.handleChange.bind(this)} placeholder="price" />
+        <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in" />
+        <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out" />
         <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
       </div>
     );
   }
-  
-  handleChange(e){
-      this.setState({[e.target.name]: e.target.value})
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
   }
- 
+
+}
+const mapStateToProps = function (state) {
+  return { vacationsArray: state.allVac };
 }
 
-
-function mapDispatchToProps(dispatch){
-  return{
-    saveData: function(vaca){
+function mapDispatchToProps(dispatch) {
+  return {
+    saveData: function (vaca) {
       return dispatch(saveVacaToServer(vaca))
     }
   }
@@ -43,8 +52,9 @@ function mapDispatchToProps(dispatch){
 
 function saveVacaToServer(vaca) {
   return async function (dispatch) {
-    let r = await fetch(`http://localhost:3000/api/vacations/`, {
-      method:'PUT',
+    let vid = this.state.id;
+    let r = await fetch(`http://localhost:3000/api/vacations/${vid}`, {
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -55,7 +65,7 @@ function saveVacaToServer(vaca) {
   }
 }
 
-const adminEdit = connect(null, mapDispatchToProps)(AdminEdit);
+const adminEdit = connect(mapStateToProps, mapDispatchToProps)(AdminEdit);
 export default adminEdit;
 
 
