@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import AdminEdit from './AdminEdit';
 
 class AVac extends Component {
@@ -18,10 +17,7 @@ class AVac extends Component {
         <p>{this.props.vac.vac_checkin}</p>
         <p>{this.props.vac.vac_checkout}</p>
         <p>{this.props.vac.vac_price}</p>
-        <Router>
-          <Route path='/vacations/:vid' render={(props) =>
-            <AdminEdit vid={this.props.vac.id} {...props} />} />
-        </Router>
+       
       </div >
 
     );

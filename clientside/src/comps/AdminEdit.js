@@ -5,17 +5,16 @@ import { connect } from 'react-redux';
 
 class AdminEdit extends Component {
   constructor(props) {
-    super(props)
-
+    super(props);
     console.log(this);
     console.log(props);
+    console.log(this.props.match.params.vid)
   }
 
-  state = {
-    id: this.props.match.params.id,
-    vaca: this.props.vacationsArray[1]
+  state={
+    cc:this.props.vacationsArray[this.props.match.params.vid-1]
   }
-
+  
   componentDidMount() {
     this.props.vacationsArray;
   }
@@ -23,11 +22,11 @@ class AdminEdit extends Component {
   render() {
     return (
       <div className="form">
-        <input name="destination" value={this.props.vacationsArray.destination} onChange={this.handleChange.bind(this)} placeholder="name" />
-        <input name="desc" onChange={this.handleChange.bind(this)} placeholder="desc" />
-        <input name="price" onChange={this.handleChange.bind(this)} placeholder="price" />
-        <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in" />
-        <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out" />
+        <input name="destination" placeholder={this.state.cc.vac_destination} onChange={this.handleChange.bind(this)} />
+        <input name="desc" placeholder={this.state.cc.vac_desc} onChange={this.handleChange.bind(this)}  />
+        <input name="price" placeholder={this.state.cc.vac_price} onChange={this.handleChange.bind(this)}  />
+        <input type="date" placeholder={this.state.cc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
+        <input type="date" name="checkout" placeholder={this.state.cc.vac_checkout} onChange={this.handleChange.bind(this)}  />
         <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
       </div>
     );
@@ -38,6 +37,7 @@ class AdminEdit extends Component {
   }
 
 }
+
 const mapStateToProps = function (state) {
   return { vacationsArray: state.allVac };
 }
@@ -51,9 +51,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function saveVacaToServer(vaca) {
+  debugger;
   return async function (dispatch) {
-    let vid = this.state.id;
-    let r = await fetch(`http://localhost:3000/api/vacations/${vid}`, {
+    let dc = vaca.cc.id;
+    let r = await fetch(`http://localhost:3000/api/vacations/${dc}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

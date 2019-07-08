@@ -16,10 +16,24 @@ router.get('/:id', async function (req, res, next) {
     res.json(result);
 });
 
-// edit vacation by id
+// edit vacation by params id
 router.put('/:id', async function (req, res, next) {
-    let result = await pool.query(`SELECT * FROM travel.vacations WHERE id=${req.params.id}`);
-    res.json(result);
+        let insertQuery = `UPDATE travel.vacations SET 
+        vac_destination = '${req.body.destination}',
+        vac_desc ='${req.body.desc}',
+        vac_price =${req.body.price},
+        vac_checkin ='${req.body.checkin}',
+        vac_checkout ='${req.body.checkout}'
+        WHERE id = ${req.params.id}`;
+        let result = await pool.query(insertQuery);
+        res.json(result);
+   
+});
+
+// delete by params id
+router.delete('/:id', async function (req, res, next) {  
+    let result = await pool.query(`DELETE FROM travel.vacations WHERE id=${req.params.id}`); 
+    res.json(result); 
 });
 
 // add new vacation

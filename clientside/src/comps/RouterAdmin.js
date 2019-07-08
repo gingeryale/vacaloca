@@ -31,6 +31,8 @@ class RouterAdmin extends Component {
               </ul>
 
               <Switch>
+              <Route exact path='/vacations/:vid' render={(props) => <AdminEdit {...props}/>} />
+
                 <Route excat path='/vacations' render={(props) =>
                   <Allvac {...props} />} />
 
@@ -38,7 +40,7 @@ class RouterAdmin extends Component {
                   <AddVac {...props} />} />
                 <Route excat path='/login' render={(props) => <Login {...props} />} />
 
-                <Route exact path='/vacations/:vid' render={(props) => <AdminEdit {...props} />} />
+                
 
                 <Route component={NoMatch} />
               </Switch>
