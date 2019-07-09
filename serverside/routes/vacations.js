@@ -36,6 +36,7 @@ router.delete('/:id', async function (req, res, next) {
     res.json(result); 
 });
 
+
 // add new vacation
 router.post('/', async function (req, res, next) {
     if (req.session.user = [0]) {

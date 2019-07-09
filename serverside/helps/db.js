@@ -30,8 +30,8 @@ var myDbHelper = {
             (id INT(11) AUTO_INCREMENT PRIMARY KEY,
             uid int,
             vid int,
-            FOREIGN KEY (uid) REFERENCES travel.users(id),
-            FOREIGN KEY (vid) REFERENCES travel.vacations(id)
+            FOREIGN KEY (uid) REFERENCES travel.users(id) ON DELETE CASCADE,
+            FOREIGN KEY (vid) REFERENCES travel.vacations(id) ON DELETE CASCADE
              )`;
             pool.query(createSubs).then(data => {
                 console.log(data);

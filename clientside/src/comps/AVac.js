@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import '../App.css';
-import AdminEdit from './AdminEdit';
+import { connect } from 'react-redux';
+
 
 class AVac extends Component {
   render() {
-    var vid = this.props.vac.id;
     return (
       <div className="vaca">
         <div>
           <button onClick={this.gotovaca.bind(this)}>Edit</button>
-          <button>x  {this.props.vac.id}</button>
+          <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>X {this.props.vac.id}</button>
           <span vid={this.props.vac.id}>Follow</span>
         </div>
         <h5>{this.props.vac.vac_destination}</h5>
@@ -23,11 +23,34 @@ class AVac extends Component {
     );
   }
   gotovaca() {
-    this.props.goto('/vacations/' + this.props.vac.id);
+    this.props.naviEdit('/vacations/' + this.props.vac.id);
   }
 
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteV: function (ev) {
+      return dispatch(delVacaFromServer(ev))
+    }
+  }
+}
 
+function delVacaFromServer(ev) {
+  let delid = ev.target.id;
+  return async function (dispatch) {
+    debugger;
+    let r = await fetch(`http://localhost:3000/api/vacations/${delid}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    const content = await r.json();
+    console.log(content);
+  }
+}
 
-export default AVac;
+const aVac = connect(null, mapDispatchToProps)(AVac);
+export default aVac;

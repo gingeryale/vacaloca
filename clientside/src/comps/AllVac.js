@@ -15,7 +15,7 @@ class AllVac extends Component {
         <div className="App-header">
           <p>time now {this.props.dateprops.toLocaleString()}</p>
         </div>
-        {this.props.allVacaProps.map(v => <AVac vac={v} key={v.id} goto={this.props.history.push} />)}
+        {this.props.allVacaProps.map(v => <AVac vac={v} key={v.id} naviEdit={this.props.history.push} />)}
       </div>
     );
   }
