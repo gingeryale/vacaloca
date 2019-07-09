@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 
 class AdminEdit extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   console.log(this);
-  //   console.log(props);
-  //   console.log(this.props.match.params.vid)
-  // }
+  constructor(props) {
+    super(props);
+    console.log(this);
+    console.log(props);
+    console.log(this.props.match.params.vid)
+  }
 
   state={
     cc:this.props.vacationsArray[this.props.match.params.vid-1]
@@ -29,7 +29,7 @@ class AdminEdit extends Component {
         <input name="price" placeholder={this.state.cc.vac_price} onChange={this.handleChange.bind(this)}  />
         <input type="date" value={this.state.cc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
         <input type="date" value={this.state.cc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
-        <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
+        <button onClick={this.inputCheck.bind(this, this.state)}>Edit</button>
       </div>
     );
   }
@@ -37,6 +37,17 @@ class AdminEdit extends Component {
   //value={this.state.isFocused ? this.state.inputValue : selected_id}
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  inputCheck(vaca){
+    debugger;
+    !vaca.price ? vaca.price = vaca.cc.vac_price : vaca.price=vaca.price;
+    !vaca.destination ? vaca.destination = vaca.cc.vac_destination : vaca.destination=vaca.destination;
+    !vaca.desc ? vaca.desc = vaca.cc.vac_desc : vaca.desc=vaca.desc;
+    !vaca.checkin ? vaca.checkin = vaca.cc.vac_checkin : vaca.checkin=vaca.checkin;
+    !vaca.checkout ? vaca.checkout = vaca.cc.vac_checkout : vaca.checkout=vaca.checkout;
+    vaca.cc.id = this.props.match.params.vid;
+    this.props.saveData(vaca);
   }
 
 }
@@ -48,19 +59,12 @@ const mapStateToProps = function (state) {
 function mapDispatchToProps(dispatch) {
   return {
     saveData: function (vaca) {
-      return dispatch(inputCheck(vaca))
+      return dispatch(saveVacaToServer(vaca))
     }
   }
 }
 
-function inputCheck(vaca){
-  !vaca.price ? vaca.price = vaca.cc.vac_price : vaca.price="contact us for detials";
-  !vaca.destination ? vaca.destination = vaca.cc.vac_destination : vaca.destination="contact us 4 details";
-  !vaca.desc ? vaca.desc = vaca.cc.vac_desc : vaca.desc="contact us 4 details";
-  !vaca.checkin ? vaca.checkin = vaca.cc.vac_checkin : vaca.checkin="contact us 4 details";
-  !vaca.checkout ? vaca.checkout = vaca.cc.vac_checkout : vaca.checkout="contact us 4 details";
-  saveVacaToServer(vaca);
-}
+
 function saveVacaToServer(vaca) {
   return async function (dispatch) {
     let dc = vaca.cc.id;
