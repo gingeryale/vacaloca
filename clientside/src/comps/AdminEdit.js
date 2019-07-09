@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 class AdminEdit extends Component {
 debugger;
   state={
-    vc:this.props.vacationsArray[this.props.match.params.vid-1]
+    vc:this.props.vacationsArray[this.props.match.params.vid]-1
   }
  
   componentDidMount() {
@@ -50,6 +50,7 @@ debugger;
 }
 
 const mapStateToProps = function (state) {
+  debugger;
   return { vacationsArray: state.allVac };
 }
 
@@ -64,7 +65,7 @@ function mapDispatchToProps(dispatch) {
 
 function saveVacaToServer(vaca) {
   return async function (dispatch) {
-    let dc = (vaca.vc.id)+1;
+    let dc = (vaca.vc.id);
     let r = await fetch(`http://localhost:3000/api/vacations/${dc}`, {
       method: 'PUT',
       headers: {

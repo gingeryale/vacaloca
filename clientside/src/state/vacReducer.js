@@ -2,11 +2,11 @@ const initializeState = {
     date: new Date(),
     allVac: [{
         id: 0,
-        destination: "destination vacation",
-        desc: "best dest",
-        price: 0,
-        checkin: 0,
-        checkout: 0
+        destination: "vacaloca vacations",
+        desc: "deals all the way",
+        price: 100,
+        checkin: "01-01-1970",
+        checkout: "01-01-3000"
     }],
     following: [],
     isLoggedIn: true,
@@ -30,12 +30,15 @@ const vacReducer = (state = initializeState, action) => {
                 isLoggedIn: action.data
             })
             return newState;
+
             case 'DELETE_V':
-            newState = Object.assign({}, state, {
-                allVac: action.data,
+            let prevArray = [...state.allVac];
+            prevArray.splice(prevArray.filter(el => el.id !== action.data),1);
+            newState = {
                 date: new Date(),
-                isLoggedIn: action.data
-            })
+                isLoggedIn: true,
+                allVac: prevArray
+            }
             return newState;
         case 'LOGIN':
             if (action.data.msg == "OK") {

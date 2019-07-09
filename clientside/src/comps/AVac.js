@@ -9,7 +9,7 @@ class AVac extends Component {
       <div className="vaca">
         <div>
           <button onClick={this.gotovaca.bind(this)}>Edit</button>
-          <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>X {this.props.vac.id}</button>
+          <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
           <span vid={this.props.vac.id}>Follow</span>
         </div>
         <h5>{this.props.vac.vac_destination}</h5>
@@ -50,7 +50,7 @@ function delVacaFromServer(ev) {
     if(content.msg=='OK'){
       alert('deleted');
     }
-    dispatch({ type: "DELETE_V", data: content });
+    dispatch({ type: "DELETE_V", data: delid });
   }
 }
 
