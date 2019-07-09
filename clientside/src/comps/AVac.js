@@ -39,7 +39,6 @@ function mapDispatchToProps(dispatch) {
 function delVacaFromServer(ev) {
   let delid = ev.target.id;
   return async function (dispatch) {
-    debugger;
     let r = await fetch(`http://localhost:3000/api/vacations/${delid}`, {
       method: 'DELETE',
       headers: {
@@ -48,7 +47,10 @@ function delVacaFromServer(ev) {
       }
     });
     const content = await r.json();
-    console.log(content);
+    if(content.msg=='OK'){
+      alert('deleted');
+    }
+    dispatch({ type: "DELETE_V", data: content });
   }
 }
 

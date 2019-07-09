@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 
 class AdminEdit extends Component {
-
+debugger;
   state={
-    cc:this.props.vacationsArray[this.props.match.params.vid-1]
+    vc:this.props.vacationsArray[this.props.match.params.vid-1]
   }
  
   componentDidMount() {
@@ -19,11 +19,11 @@ class AdminEdit extends Component {
     return (
       <div >
       <div className="form">
-        <input name="destination" placeholder={this.state.cc.vac_destination} onChange={this.handleChange.bind(this)} />
-        <input name="desc" placeholder={this.state.cc.vac_desc} onChange={this.handleChange.bind(this)}  />
-        <input name="price" placeholder={this.state.cc.vac_price} onChange={this.handleChange.bind(this)}  />
-        <input type="date" placeholder={this.state.cc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
-        <input type="date" placeholder={this.state.cc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
+        <input name="destination" placeholder={this.state.vc.vac_destination} onChange={this.handleChange.bind(this)} />
+        <input name="desc" placeholder={this.state.vc.vac_desc} onChange={this.handleChange.bind(this)}  />
+        <input name="price" placeholder={this.state.vc.vac_price} onChange={this.handleChange.bind(this)}  />
+        <input type="date" placeholder={this.state.vc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
+        <input type="date" placeholder={this.state.vc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
         <button onClick={this.inputCheck.bind(this, this.state)}>Edit</button>
         <p>Date updates will be saved but not displayed in field</p>
 
@@ -38,12 +38,12 @@ class AdminEdit extends Component {
   }
 
   inputCheck(vaca){
-    !vaca.price ? vaca.price = vaca.cc.vac_price : vaca.price=vaca.price;
-    !vaca.destination ? vaca.destination = vaca.cc.vac_destination : vaca.destination=vaca.destination;
-    !vaca.desc ? vaca.desc = vaca.cc.vac_desc : vaca.desc=vaca.desc;
-    !vaca.checkin ? vaca.checkin = vaca.cc.vac_checkin : vaca.checkin=vaca.checkin;
-    !vaca.checkout ? vaca.checkout = vaca.cc.vac_checkout : vaca.checkout=vaca.checkout;
-    vaca.cc.id = this.props.match.params.vid;
+    !vaca.price ? vaca.price = vaca.vc.vac_price : vaca.price=vaca.price;
+    !vaca.destination ? vaca.destination = vaca.vc.vac_destination : vaca.destination=vaca.destination;
+    !vaca.desc ? vaca.desc = vaca.vc.vac_desc : vaca.desc=vaca.desc;
+    !vaca.checkin ? vaca.checkin = vaca.vc.vac_checkin : vaca.checkin=vaca.checkin;
+    !vaca.checkout ? vaca.checkout = vaca.vc.vac_checkout : vaca.checkout=vaca.checkout;
+    vaca.vc.id = this.props.match.params.vid;
     this.props.saveData(vaca);
   }
 
@@ -64,7 +64,7 @@ function mapDispatchToProps(dispatch) {
 
 function saveVacaToServer(vaca) {
   return async function (dispatch) {
-    let dc = vaca.cc.id;
+    let dc = (vaca.vc.id)+1;
     let r = await fetch(`http://localhost:3000/api/vacations/${dc}`, {
       method: 'PUT',
       headers: {
@@ -74,7 +74,9 @@ function saveVacaToServer(vaca) {
       body: JSON.stringify(vaca)
     });
     const content = await r.json();
-    alert("sent");
+    if(content.msg=='OK'){
+      alert('edit successful');
+    }
 
   }
 }

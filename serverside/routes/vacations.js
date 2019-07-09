@@ -26,28 +26,25 @@ router.put('/:id', async function (req, res, next) {
         vac_checkout ='${req.body.checkout}'
         WHERE id = ${req.params.id}`;
         let result = await pool.query(insertQuery);
-        res.json(result);
-   
+        res.status(200).json({ msg: 'OK' });   
 });
 
 // delete by params id
 router.delete('/:id', async function (req, res, next) {  
-    let result = await pool.query(`DELETE FROM travel.vacations WHERE id=${req.params.id}`); 
-    res.json(result); 
+    let result = await pool.query(`DELETE FROM travel.vacations WHERE id=${req.params.id}`);  
+    res.status(200).json({ msg: 'OK' });
 });
 
 
 // add new vacation
 router.post('/', async function (req, res, next) {
-    if (req.session.user = [0]) {
+    
         let insertQuery = ` INSERT INTO  travel.vacations (vac_destination,vac_desc,vac_price,vac_checkin,vac_checkout, vac_img) 
     VALUES ('${req.body.destination}','${req.body.desc}',${req.body.price},'${req.body.checkin}',
     '${req.body.checkout}', '${req.body.img}')`;
         let result = await pool.query(insertQuery);
-        res.json(result);
-    } else {
-        res.redirect('/login');
-    }
+        res.status(200).json({ msg: 'OK' });
+    
 });
 
 

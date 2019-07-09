@@ -42,7 +42,11 @@ function saveVacaToServer(vaca) {
       },
       body: JSON.stringify(vaca)
     });
+    dispatch({ type: "ADD_V", data: content });
     const content = await r.json();
+    if(content.msg=='OK'){
+      alert('added successfuly');
+    }
   }
 }
 
