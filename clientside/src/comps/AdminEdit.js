@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 
 
 class AdminEdit extends Component {
-debugger;
   state={
-    vc:this.props.vacationsArray[this.props.match.params.vid]-1
+    vc:this.componentDidMount()
   }
  
   componentDidMount() {
+    debugger
     this.props.vacationsArray;
+    let aa = this.props.vacationsArray;
+    let foundV = aa.find(el => el.id == this.props.match.params.vid);
+    return foundV;
   }
  
 
@@ -50,7 +53,6 @@ debugger;
 }
 
 const mapStateToProps = function (state) {
-  debugger;
   return { vacationsArray: state.allVac };
 }
 
