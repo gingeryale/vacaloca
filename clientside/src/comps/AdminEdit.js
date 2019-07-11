@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 class AdminEdit extends Component {
   state={
-    vc:this.componentDidMount()
+    vc:this.componentDidMount(),
+    vp:this.props.match.params.vid
   }
  
   componentDidMount() {
@@ -21,13 +22,12 @@ class AdminEdit extends Component {
     return (
       <div >
       <div className="form">
-        <input name="destination" placeholder={this.state.vc.vac_destination} onChange={this.handleChange.bind(this)} />
-        <input name="desc" placeholder={this.state.vc.vac_desc} onChange={this.handleChange.bind(this)}  />
-        <input name="price" placeholder={this.state.vc.vac_price} onChange={this.handleChange.bind(this)}  />
-        <input type="date" placeholder={this.state.vc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
-        <input type="date" placeholder={this.state.vc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
+        <input name="destination" defaultValue={this.state.vc.vac_destination} onChange={this.handleChange.bind(this)} />
+        <input name="desc" defaultValue={this.state.vc.vac_desc} onChange={this.handleChange.bind(this)}  />
+        <input name="price" defaultValue={this.state.vc.vac_price} onChange={this.handleChange.bind(this)}  />
+        <input defaultValue={this.state.vc.vac_checkin} type="date" placeholder={this.state.vc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
+        <input defaultValue={this.state.vc.vac_checkout} type="date" placeholder={this.state.vc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
         <button onClick={this.inputCheck.bind(this, this.state)}>Edit</button>
-        <p>Date updates will be saved but not displayed in field</p>
 
       </div>
 </div>
@@ -55,14 +55,24 @@ const mapStateToProps = function (state) {
   return { vacationsArray: state.allVac };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    saveData: function (vaca) {
-      return dispatch(saveVacaToServer(vaca))
-    }
-  }
-}
 
+const mapDispatchToProps = dispatch => {
+  return {
+    saveData: (vaca) => {dispatch(saveVacaToServer(vaca))},
+    vprops: () => {dispatch(loadpropsFromServer())}
+  };
+};
+
+
+function loadpropsFromServer(){
+    return async function (dispatch) {
+      var vvid = this.props.match.params.vid;
+      let r = await fetch(`http://localhost:3000/api/vacations/${vvid}`);
+      let jsonDATA = await r.json();
+      dispatch({ type: "LOAD_V", data: jsonDATA });
+    }
+  
+}
 
 function saveVacaToServer(vaca) {
   return async function (dispatch) {

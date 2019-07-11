@@ -17,6 +17,7 @@ class AVac extends Component {
         <p>{this.props.vac.vac_checkin}</p>
         <p>{this.props.vac.vac_checkout}</p>
         <p>{this.props.vac.vac_price}</p>
+        <p><img src={this.props.vac.vac_img}/></p>
        
       </div >
 

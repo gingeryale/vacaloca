@@ -10,7 +10,8 @@ const initializeState = {
     }],
     following: [],
     isLoggedIn: true,
-    isAdmin: false
+    isAdmin: false,
+    vprops:{}
 }
 const vacReducer = (state = initializeState, action) => {
     switch (action.type) {
@@ -40,13 +41,24 @@ const vacReducer = (state = initializeState, action) => {
                 allVac: prevArray
             }
             return newState;
+            case 'LOAD_V':
+            prevArray = [...state.allVac];
+            let fv = prevArray.find(el => el.id == this.props.match.params.vid);
+            newState = {
+                date: new Date(),
+                isLoggedIn: true,
+                allVac: prevArray,
+                vprops: fv
+            }
+            return newState;
             case 'EDIT_V':
             prevArray = [...state.allVac];
             let edited = prevArray.find(el => el.id == action.data);
             newState = {
                 date: new Date(),
                 isLoggedIn: true,
-                allVac: prevArray
+                allVac: prevArray,
+                vprops: edited
             }
             return newState;
         case 'LOGIN':
