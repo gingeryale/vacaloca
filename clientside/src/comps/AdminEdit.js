@@ -9,7 +9,6 @@ class AdminEdit extends Component {
   }
  
   componentDidMount() {
-    debugger
     this.props.vacationsArray;
     let aa = this.props.vacationsArray;
     let foundV = aa.find(el => el.id == this.props.match.params.vid);

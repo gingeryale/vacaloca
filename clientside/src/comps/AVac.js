@@ -10,7 +10,7 @@ class AVac extends Component {
         <div>
           <button onClick={this.gotovaca.bind(this)}>Edit</button>
           <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
-          <span vid={this.props.vac.id}>Follow</span>
+          <button vid={this.props.vac.id}>Follow</button>
         </div>
         <h5>{this.props.vac.vac_destination}</h5>
         <p>{this.props.vac.vac_desc}</p>
