@@ -108,15 +108,22 @@ router.get('/follow/all', async function (req, res, next) {
 }); 
 
 // POST new vacation subscriber
-router.post('/subs', async function (req, res, next) { 
-    if(req.session.connectedUser.name='ADMIN'){
-    let insertQuery= `INSERT INTO  travel.subscribers (uid, vid) 
-    VALUES (${req.body.uid},${req.body.vid})`; 
+// router.post('/subs/:id', async function (req, res, next) { 
+//     req.session.connectedUser.id='8';
+//     let insertQuery= `INSERT INTO  travel.subscribers (vid, uid) 
+//     VALUES (${req.body.vid}, ${req.session.connectedUser.id})`; 
+//     let result = await pool.query(insertQuery); 
+//     res.json(result); 
+// }); 
+
+// `INSERT into travel.subscribers(uid,vid) 
+//     VALUES ("{req.session.connectedUser[travel.users.id]}","{req.body.vid}")`;
+router.post('/subs/:id', async function (req, res, next) { 
+    let insertQuery= `INSERT into travel.subscribers(uid,vid) 
+    VALUES (8, '${req.params.id}')`;
+    console.log("lllllllllllllllllllllllllllllllllllll=> "+req.params.id)
     let result = await pool.query(insertQuery); 
     res.json(result); 
-    } else {
-        res.redirect('/login');
-    }
 }); 
 
 

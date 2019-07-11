@@ -40,6 +40,15 @@ const vacReducer = (state = initializeState, action) => {
                 allVac: prevArray
             }
             return newState;
+            case 'EDIT_V':
+            prevArray = [...state.allVac];
+            let edited = prevArray.find(el => el.id == action.data);
+            newState = {
+                date: new Date(),
+                isLoggedIn: true,
+                allVac: prevArray
+            }
+            return newState;
         case 'LOGIN':
             if (action.data.msg == "OK") {
                 newState = {
@@ -57,6 +66,17 @@ const vacReducer = (state = initializeState, action) => {
             }
 
             return newState;
+            case 'FOLLOW_V':
+                let newFollowArr = [...state.following];
+                prevArray = [...state.allVac];
+                newFollowArr.push(action.data);
+                newState = {
+                    date: new Date(),
+                    following: newFollowArr,
+                    allVac: prevArray,
+                    isLoggedIn: true
+                }
+                return newState;
         default:
 
             return state;
