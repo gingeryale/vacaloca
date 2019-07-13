@@ -4,21 +4,38 @@ import { connect } from 'react-redux';
 
 
 class AddVac extends Component {
+ 
   render() {
     return (
       <div className="form">
-        <input name="destination" onChange={this.handleChange.bind(this)} placeholder="name" />
-        <input name="desc" onChange={this.handleChange.bind(this)} placeholder="desc" />
-        <input name="price" onChange={this.handleChange.bind(this)} placeholder="price" />
-        <input type="date" name="checkin" onChange={this.handleChange.bind(this)} placeholder="check-in" />
-        <input type="date" name="checkout" onChange={this.handleChange.bind(this)} placeholder="check-out" />
+        <input required name="destination" onChange={this.handleChange.bind(this)} placeholder="name" />
+        <input required name="desc" onChange={this.handleChange.bind(this)} placeholder="desc" />
+        <input required name="price" onChange={this.handleChange.bind(this)} placeholder="price" />
+        <input required type="date" name="checkin" onChange={this.handleChange.bind(this)} />
+        <input required type="date" name="checkout" onChange={this.handleChange.bind(this)} />
+        <input type="file" name="img" onChange={this.handleImg.bind(this)} accept="image/*"/>
         <button onClick={this.props.saveData.bind(this, this.state)}>Add</button>
       </div>
     );
   }
 
+  handleImg(e){
+    let files = e.target.files;
+    console.table("data file " +files);
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload=(e)=>{
+      var formData = {img:e.target.result};
+      this.setState({ img: formData.img });
+      console.log(this.state);
+    }
+  }
+
+
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
+
   }
 
 }

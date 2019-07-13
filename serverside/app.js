@@ -8,6 +8,8 @@ var usersRouter = require('./routes/users');
 var meetVaca = require('./routes/vacations');
 var myDbHelper = require('./helps/db');
 var cors = require('cors');
+var bodyParser = require('body-parser');
+
 myDbHelper.createDBAndTables();
 
 
@@ -19,6 +21,7 @@ app.use(session({
     cookie: { secure: false }
   }));
 app.use(cors());
+app.use(bodyParser({limit: '50mb'}));
 
 app.use(logger('dev'));
 app.use(express.json());

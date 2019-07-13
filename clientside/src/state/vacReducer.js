@@ -2,11 +2,12 @@ const initializeState = {
     date: new Date(),
     allVac: [{
         id: 0,
-        destination: "vacaloca vacations",
-        desc: "deals all the way",
-        price: 100,
-        checkin: "01-01-1970",
-        checkout: "01-01-3000"
+        destination: "",
+        desc: "",
+        price: 0,
+        checkin: "",
+        checkout: "",
+        img:{}
     }],
     following: [],
     isLoggedIn: true,
