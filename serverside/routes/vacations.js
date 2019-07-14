@@ -23,7 +23,8 @@ router.put('/:id', async function (req, res, next) {
         vac_desc ='${req.body.desc}',
         vac_price =${req.body.price},
         vac_checkin ='${req.body.checkin}',
-        vac_checkout ='${req.body.checkout}'
+        vac_checkout ='${req.body.checkout}',
+        vac_img ='${req.body.img}'
         WHERE id = ${req.params.id}`;
         let result = await pool.query(insertQuery);
         res.status(200).json({ msg: 'OK' });   

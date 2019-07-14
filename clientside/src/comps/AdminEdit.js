@@ -27,6 +27,7 @@ class AdminEdit extends Component {
         <input name="price" defaultValue={this.state.vc.vac_price} onChange={this.handleChange.bind(this)}  />
         <input defaultValue={this.state.vc.vac_checkin} type="date" placeholder={this.state.vc.vac_checkin} name="checkin" onChange={this.handleChange.bind(this)}  />
         <input defaultValue={this.state.vc.vac_checkout} type="date" placeholder={this.state.vc.vac_checkout} name="checkout" onChange={this.handleChange.bind(this)}  />
+        <input type="file" name="img" onChange={this.handleImg.bind(this)} accept="image/*"/>
         <button onClick={this.inputCheck.bind(this, this.state)}>Edit</button>
 
       </div>
@@ -34,6 +35,19 @@ class AdminEdit extends Component {
     );
   }
 
+  
+  handleImg(e){
+    let files = e.target.files;
+    console.table("data file " +files);
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload=(e)=>{
+      var formData = {img:e.target.result};
+      this.setState({ img: formData.img });
+      console.log(this.state);
+    }
+  }
+  
   //value={this.state.isFocused ? this.state.inputValue : selected_id}
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value })
@@ -45,6 +59,7 @@ class AdminEdit extends Component {
     !vaca.desc ? vaca.desc = vaca.vc.vac_desc : vaca.desc=vaca.desc;
     !vaca.checkin ? vaca.checkin = vaca.vc.vac_checkin : vaca.checkin=vaca.checkin;
     !vaca.checkout ? vaca.checkout = vaca.vc.vac_checkout : vaca.checkout=vaca.checkout;
+    !vaca.img ? vaca.img = vaca.vc.vac_img : vaca.img=vaca.img;
     vaca.vc.id = this.props.match.params.vid;
     this.props.saveData(vaca);
   }

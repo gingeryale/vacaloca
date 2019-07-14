@@ -23,12 +23,17 @@
   to { transform: rotate(360deg); }
 }
 
+.vcontain{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 .vaca{
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  height:215px;
-  width:33%;
+  height:260px;
+  width:30%;
   border:1px solid grey;
 }
 .vaca p{
