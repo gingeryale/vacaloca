@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 15px;
   padding: 20px;
   color: white;
 }
@@ -27,13 +27,15 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  width:100%;
 }
 .vaca{
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   height:260px;
-  width:30%;
+  width:33%;
   border:1px solid grey;
 }
 .vaca p{
