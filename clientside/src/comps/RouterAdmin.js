@@ -7,7 +7,7 @@ import Footer from './Footer';
 import NoMatch from './404';
 import Login from './Login';
 import AdminEdit from './AdminEdit';
-import AVac from './AVac';
+import Home from './Home';
 
 
 
@@ -20,6 +20,9 @@ class RouterAdmin extends Component {
           <Router>
             <div>
               <ul>
+              <li>
+                  <Link to="/">Home</Link>
+                </li>
                 <li>
                   <Link to="/vacations">All Vaca</Link>
                 </li>
@@ -40,6 +43,7 @@ class RouterAdmin extends Component {
                 <Route excat path='/addvacation' render={(props) =>
                   <AddVac {...props} />} />
                 <Route excat path='/login' render={(props) => <Login {...props} />} />
+                <Route exact path='/' render={(props) => <Home {...props}/>} />
 
                 <Route component={NoMatch} />
               </Switch>
