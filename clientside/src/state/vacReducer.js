@@ -1,18 +1,11 @@
 const initializeState = {
     date: new Date(),
-    allVac: [{
-        id: 0,
-        destination: "",
-        desc: "",
-        price: 0,
-        checkin: "",
-        checkout: "",
-        img:{}
+    allVac: [{ id: 0, destination: "", desc: "", price: 0, checkin: "", checkout: "", img:{} 
     }],
     following: [],
-    isLoggedIn: true,
+    isLoggedIn: false,
     isAdmin: false,
-    vprops:{}
+    vprops: {}
 }
 const vacReducer = (state = initializeState, action) => {
     switch (action.type) {

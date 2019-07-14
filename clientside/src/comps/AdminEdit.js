@@ -86,7 +86,6 @@ function loadpropsFromServer(){
       let jsonDATA = await r.json();
       dispatch({ type: "LOAD_V", data: jsonDATA });
     }
-  
 }
 
 function saveVacaToServer(vaca) {

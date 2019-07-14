@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
+import { Link } from "react-router-dom";
 
 
 class Login extends Component {
@@ -10,9 +11,12 @@ class Login extends Component {
   render() {
     return (
       <div className="form">
-       <input name="name" onChange={this.handleChange.bind(this)} placeholder="username"/>
-       <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password"/>
+       username: <input name="name" onChange={this.handleChange.bind(this)} placeholder="username"/>
+       password: <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password"/>
         <button onClick={this.props.sendLogin.bind(this, this.state)}>Login</button>
+        <br />
+        <br />
+        <p className="link"><Link to="/register">To Become Registered</Link></p>
       </div>
     );
   }

@@ -11,19 +11,25 @@ class Register extends Component {
   render() {
     return (
       <div className="form">
-       <input name="fname" onChange={this.handleChange.bind(this)} placeholder="firstname" required/>
+      <label>
+    Firstname:
+    <input name="fname" onChange={this.handleChange.bind(this)} placeholder="firstname" required/>
+  </label>
+  <label>
+  lastname: 
+  <input name="lname" onChange={this.handleChange.bind(this)} placeholder="lastname" required/>
+  </label>
        
-       <input name="lname" onChange={this.handleChange.bind(this)} placeholder="lastname" required/>
-       
-       <input name="name" required
+  <label>
+       username: <input name="name" required
        onChange={this.handleChange.bind(this)} 
        onBlur={this.once.bind(this)}
        placeholder="username"/>
-       
+        </label>
        <span hidden={!this.state.showErr} className="err err_taken">username is not available</span>
-       
-       <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password" required/>
-        
+       <label>
+       password: <input type="password" name="pass" onChange={this.handleChange.bind(this)} placeholder="password" required/>
+       </label>
         <button disabled={!this.state.disabledState}
         onClick={this.props.saveData.bind(this, this.state)}>Register</button>
         <span className="err err_empty" hidden={!this.state.visible}>Error: Detected empty form fields</span>

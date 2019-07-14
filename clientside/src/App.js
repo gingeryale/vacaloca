@@ -4,16 +4,26 @@ import './App.css';
 import { connect } from 'react-redux';
 import RouterAdmin from './comps/RouterAdmin';
 import RouterUsers from './comps/RouterUsers';
+import RouterGuest from './comps/RouterGuest';
 
 class App extends Component {
 
   render() {
-
+    if(this.props.isLoggedIn && this.props.isAdmin){
     return (
       <RouterAdmin />
     );
-
-
+    }
+    else if(this.props.isLoggedIn && !this.props.isAdmin){
+      return(
+        <RouterUsers />
+      )
+    }
+    else{
+      return(
+        <RouterGuest />
+      )
+    }
   }
 }
 
