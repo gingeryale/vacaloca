@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
-import { Link, withRouter } from "react-router-dom";
-import {ThemeContext } from '../App.js';
+import { Link } from "react-router-dom";
 
 
 class Login extends Component {
-  constructor(props, context){
-    super();
-  }
-  render() {
+   render() {
     return (
       <div className="form">
        username: <input name="name" onChange={this.handleChange.bind(this)} placeholder="username"/>
@@ -25,20 +21,22 @@ class Login extends Component {
   handleChange(e){
       this.setState({[e.target.name]: e.target.value})
   }
+  
  
 }
 
 const mapStateToProps = function(state){
-  return {isLoggedIn:state.isLoggedIn};
+  return {isLoggedIn:state.isLoggedIn, allvacation: state.allVac};
 }
 
-function mapDispatchToProps(dispatch){
-  return{
-    sendLogin: function(loginData){
-      return dispatch(sendLoginData(loginData))
-    }
-  }
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    sendLogin: (loginData) => {dispatch(sendLoginData(loginData))},
+  };
+};
+
+
+
 function sendLoginData(loginData)  {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/users/login', {
@@ -51,12 +49,10 @@ function sendLoginData(loginData)  {
     });
     const content = await r.json();
     console.log(content);
-    debugger;
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});
-      this.props.history.push('/vacations');
-    }else{
-      this.props.history.push('/login');
+      alert("hi "+ content.name);
+      
     }
   }      
 }

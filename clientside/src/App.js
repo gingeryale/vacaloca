@@ -9,12 +9,12 @@ import RouterGuest from './comps/RouterGuest';
 class App extends Component {
 
   render() {
-    if(this.props.isLoggedIn){
+    if(this.props.isLoggedIn==true && this.props.isAdmin==true){
     return (
       <RouterAdmin />
     );
     }
-    else if(this.props.isLoggedIn && !this.props.isAdmin){
+    else if(this.props.isLoggedIn==true && this.props.isAdmin==false){
       return(
         <RouterUsers />
       )
@@ -28,7 +28,7 @@ class App extends Component {
 }
 
 const mapStateToProps = function (state) {
-  return { isLoggedIn: state.isLoggedIn };
+  return { isLoggedIn: state.isLoggedIn, isAdmin: state.isAdmin };
 }
 
 const app = connect(mapStateToProps, null)(App);

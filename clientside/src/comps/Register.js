@@ -99,6 +99,7 @@ function saveUserToServer(regData) {
     console.log(content);
     if(content.msg=="OK"){
       dispatch({type:"REG", data: content});
+      alert("you're registered " + content.name)
         this.props.history.push({
           pathname: '/vacations',
         });

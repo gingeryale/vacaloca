@@ -3,7 +3,7 @@ const initializeState = {
     allVac: [{ id: 0, destination: "", desc: "", price: 0, checkin: "", checkout: "", img:{} 
     }],
     following: [],
-    isLoggedIn: true,
+    isLoggedIn: false,
     isAdmin: false,
     vprops: {}
 }
@@ -21,8 +21,7 @@ const vacReducer = (state = initializeState, action) => {
         case 'GET_VACAS':
             newState = Object.assign({}, state, {
                 allVac: action.data,
-                date: new Date(),
-                isLoggedIn: action.data
+                isLoggedIn: true,
             })
             return newState;
 
@@ -32,7 +31,8 @@ const vacReducer = (state = initializeState, action) => {
             newState = {
                 date: new Date(),
                 isLoggedIn: true,
-                allVac: prevArray
+                allVac: prevArray,
+                isAdmin:true
             }
             return newState;
             case 'LOAD_V':
@@ -50,19 +50,26 @@ const vacReducer = (state = initializeState, action) => {
             let edited = prevArray.find(el => el.id == action.data);
             newState = {
                 date: new Date(),
-                isLoggedIn: true,
+                isLoggedIn: false,
+                isAdmin:true,
                 allVac: prevArray,
                 vprops: edited
             }
             return newState;
         case 'LOGIN':
-            if (action.data.msg == "OK") {
-                newState = {
-                    date: new Date(),
-                    isLoggedIn: true,
-                    allVac: action.data
+            if (action.data.msg == "OK" && action.data.name == "admin") {
+                newState = {...state};
+                newState.date= new Date(),
+                newState.isLoggedIn= true,
+                newState.isAdmin= false
                 }
-            }
+             else {
+                newState = {...state};
+                    newState.date= new Date(),
+                    newState.isLoggedIn= true,
+                    newState.isAdmin= false
+                }
+            
             return newState;
         case 'REG':
             if (action.data.msg == "OK") {

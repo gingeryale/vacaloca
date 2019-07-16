@@ -6,7 +6,11 @@ import AVac from './AVac';
 class AllVac extends Component {
 
   componentDidMount() {
-    this.props.loadVacas();
+    this.props.loadVacs();
+  }
+
+  componentWillReceiveProps(){
+    this.props.allVacProps
   }
 
   render() {
@@ -16,7 +20,7 @@ class AllVac extends Component {
           <p>time: {this.props.dateprops.toLocaleString()}</p>
         </div>
         <div className="vcontain">
-        {this.props.allVacaProps.map(v => <AVac vac={v} key={v.id} naviEdit={this.props.history.push} />)}
+        {this.props.allVacProps.map(v => <AVac vac={v} key={v.id} naviEdit={this.props.history.push} />)}
         </div>
       </div>
     );
@@ -24,21 +28,23 @@ class AllVac extends Component {
 }
 
 const mapStateToProps = function (state) {
-  return { dateprops: state.date, allVacaProps: state.allVac, followprops: state.following };
+  return { dateprops: state.date, allVacProps: state.allVac, 
+    followprops: state.following, loginState: state.isLoggedIn };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadVacas: function () {
-      return dispatch(loadAllVacasFromServer())
+    loadVacs: function () {
+      return dispatch(loadAllVacsFromServer())
     }
   }
 }
 
-function loadAllVacasFromServer() {
+function loadAllVacsFromServer() {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/vacations');
     let jsonDATA = await r.json();
+    console.log(jsonDATA);
     dispatch({ type: "GET_VACAS", data: jsonDATA });
   }
 }

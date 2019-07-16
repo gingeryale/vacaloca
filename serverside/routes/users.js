@@ -24,7 +24,8 @@ router.post('/login', async (req, res, next)=> {
     await pool.query(`SELECT * FROM travel.users WHERE user_name='${name}' AND user_pass='${pass}'`); 
     if(userArr.length > 0){
         req.session.connectedUser = userArr[0];
-        res.json({msg:"OK"});
+        console.log("cl " + req.session.connectedUser.user);
+        res.json({msg:"OK", name:`${name}`});
     }else{
         res.json({msg:"NOT CONNECTED"});
     }
@@ -58,7 +59,7 @@ router.get('/api', async function (req, res, next) {
 }); 
 
 
-// all DB usernames
+// all DB usernames check for duplicates
 router.get('/check', async function (req, res, next) { 
    
         let result = await pool.query('SELECT user_name FROM  travel.users'); 
@@ -93,7 +94,7 @@ router.post('/register', async function (req, res, next) {
     let insertQuery= ` INSERT INTO  travel.users (user_fname, user_lname, user_name, user_pass) 
     VALUES ('${req.body.fname}','${req.body.lname}','${req.body.name}','${req.body.pass}')`; 
     let result = await pool.query(insertQuery); 
-    res.json({msg:"OK"}); 
+    res.json({msg:"OK", name:`${req.body.fname}`}); 
 }); 
 
 

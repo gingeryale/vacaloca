@@ -9,7 +9,7 @@ function Home({ location }) {
          Welcome to Reactive Vacations
         </h3>
        
-        <p><Link to="/login">Login</Link></p>
+        
       </div>
     );
   }

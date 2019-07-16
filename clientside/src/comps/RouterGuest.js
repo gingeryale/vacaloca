@@ -6,9 +6,8 @@ import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
 import NoMatch from './404';
-import AVac from './AVac';
-import AdminEdit from './AdminEdit';
 import Home from './Home';
+import AllVac from './AllVac';
 
 class RouterUsers extends Component {
   
@@ -20,12 +19,16 @@ class RouterUsers extends Component {
                   <div>
                       <ul className="nav">
                       <li><Link to="/">Home</Link></li>
+                      <li><Link to="/login">login</Link></li>
+                      <li><Link to="/register">register</Link></li>
                       </ul>
 
                      <Switch>
                       <Route path='/login' render={(props) => <Login {...props} 
                       history={this.props.history}/>}/>
                       <Route path='/register' render={(props) => <Register {...props} />}/>
+                      <Route excat path='/vacations' render={(props) =>
+                  <AllVac {...props} />} />
 
                 <Route exact path='/' render={(props) => <Home {...props}/>} />
                       <Route component={NoMatch} />
