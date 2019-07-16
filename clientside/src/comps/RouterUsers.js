@@ -7,7 +7,6 @@ import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
 import NoMatch from './404';
-import AVac from './AVac';
 import AdminEdit from './AdminEdit';
 import Home from './Home';
 

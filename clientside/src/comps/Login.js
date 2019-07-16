@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import {ThemeContext } from '../App.js';
 
 
 class Login extends Component {
-  constructor(props){
+  constructor(props, context){
     super();
   }
   render() {
@@ -34,11 +35,11 @@ const mapStateToProps = function(state){
 function mapDispatchToProps(dispatch){
   return{
     sendLogin: function(loginData){
-      return dispatch(sendLogin(loginData))
+      return dispatch(sendLoginData(loginData))
     }
   }
 }
-function sendLogin(loginData) {
+function sendLoginData(loginData)  {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/users/login', {
       method: 'POST',
@@ -50,9 +51,10 @@ function sendLogin(loginData) {
     });
     const content = await r.json();
     console.log(content);
+    debugger;
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});
-        this.props.history.push('/vacations');
+      this.props.history.push('/vacations');
     }else{
       this.props.history.push('/login');
     }

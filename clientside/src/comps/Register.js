@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
+import { Link } from "react-router-dom";
 
 
 class Register extends Component {
@@ -33,6 +34,7 @@ class Register extends Component {
         <button disabled={!this.state.disabledState}
         onClick={this.props.saveData.bind(this, this.state)}>Register</button>
         <span className="err err_empty" hidden={!this.state.visible}>Error: Detected empty form fields</span>
+        <p><Link to="/login">Already a member? Login</Link></p>
       </div>
     );
   }

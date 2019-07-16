@@ -9,7 +9,7 @@ import RouterGuest from './comps/RouterGuest';
 class App extends Component {
 
   render() {
-    if(this.props.isLoggedIn && this.props.isAdmin){
+    if(this.props.isLoggedIn){
     return (
       <RouterAdmin />
     );

@@ -3,7 +3,7 @@ const initializeState = {
     allVac: [{ id: 0, destination: "", desc: "", price: 0, checkin: "", checkout: "", img:{} 
     }],
     following: [],
-    isLoggedIn: false,
+    isLoggedIn: true,
     isAdmin: false,
     vprops: {}
 }
@@ -58,6 +58,7 @@ const vacReducer = (state = initializeState, action) => {
         case 'LOGIN':
             if (action.data.msg == "OK") {
                 newState = {
+                    date: new Date(),
                     isLoggedIn: true,
                     allVac: action.data
                 }
