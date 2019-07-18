@@ -61,12 +61,19 @@ router.get('/api', async function (req, res, next) {
 
 // all DB usernames check for duplicates
 router.get('/check', async function (req, res, next) { 
-   
-        let result = await pool.query('SELECT user_name FROM  travel.users'); 
-        res.json(result); 
-   
-   
+    let result = await pool.query('SELECT user_name FROM  travel.users'); 
+    res.json(result); 
 }); 
+
+
+// get everything from both tables
+router.get('/show', async function(req,res,next){
+    let result = await pool.query
+    (`SELECT * FROM travel.vacations left JOIN travel.subscribers ON vacations.id = subscribers.vid and subscribers.uid=${req.session.connectedUser.id} ORDER BY subscribers.uid DESC`);
+    // let ooo = result.filter(v => v.uid == '12');
+    res.json(result);
+});
+
 
 // get all users
 router.get('/', async function (req, res, next) { 
@@ -99,10 +106,23 @@ router.post('/register', async function (req, res, next) {
 
 
 
+
 // GET all vacation subscribers
 router.get('/follow/all', async function (req, res, next) { 
     if(req.session.connectedUser){
     let result = await pool.query(`SELECT * FROM travel.subscribers`); 
+    res.json(result); } else {
+        res.redirect('/login');
+    }
+}); 
+
+
+// GET all vacation by uid id
+router.get('/follow/all/:id', async function (req, res, next) { 
+    if(req.session.connectedUser){
+        let result = await pool.query(`SELECT * FROM travel.subscribers WHERE 
+        vid IN (SELECT vid FROM travel.subscribers WHERE uid='${req.session.connectedUser.id}')`);
+ 
     res.json(result); } else {
         res.redirect('/login');
     }
@@ -164,8 +184,6 @@ router.get('/subs/report', async function (req, res, next) {
     ORDER BY trending DESC`); 
     res.json(result); 
 }); 
-
-
 
 
 module.exports = router;
