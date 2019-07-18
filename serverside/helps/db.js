@@ -27,7 +27,7 @@ var myDbHelper = {
                 console.log(data);
             });
             let createSubs = `CREATE TABLE IF NOT EXISTS travel.subscribers 
-            (id INT(11) AUTO_INCREMENT PRIMARY KEY,
+            (sid INT(11) AUTO_INCREMENT PRIMARY KEY,
             uid int,
             vid int,
             FOREIGN KEY (uid) REFERENCES travel.users(id) ON DELETE CASCADE,
