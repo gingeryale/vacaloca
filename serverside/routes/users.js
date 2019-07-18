@@ -66,12 +66,17 @@ router.get('/check', async function (req, res, next) {
 }); 
 
 
+
 // get everything from both tables
 router.get('/show', async function(req,res,next){
-    let result = await pool.query
-    (`SELECT * FROM travel.vacations left JOIN travel.subscribers ON vacations.id = subscribers.vid and subscribers.uid=${req.session.connectedUser.id} ORDER BY subscribers.uid DESC`);
-    // let ooo = result.filter(v => v.uid == '12');
-    res.json(result);
+    if(req.session.connectedUser){
+        let result = await pool.query(`SELECT * FROM travel.vacations left JOIN travel.subscribers ON vacations.id = subscribers.vid and subscribers.uid='${req.session.connectedUser.id}' ORDER BY subscribers.uid DESC`);
+        res.json(result);
+    } else {
+        let result = await pool.query(`SELECT * FROM travel.vacations` )
+        res.json(result);
+    }
+   
 });
 
 
