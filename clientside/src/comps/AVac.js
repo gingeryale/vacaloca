@@ -5,12 +5,20 @@ import { connect } from 'react-redux';
 
 class AVac extends Component {
   render() {
+      let buttons;
+      if(this.props.isAdmin==true){
+        buttons = <div>
+         <button onClick={this.gotovaca.bind(this)}>Edit</button>
+          <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
+        </div>
+      } else if (this.props.isAdmin==false){
+        buttons =<button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+      }
     return (
       <div className="vaca">
         <div>
-          <button onClick={this.gotovaca.bind(this)}>Edit</button>
-          <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
-          <button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+         {buttons}
+          
         </div>
         <h5>{this.props.vac.vac_destination}</h5>
         <p>{this.props.vac.vac_desc}</p>
@@ -27,6 +35,10 @@ class AVac extends Component {
     this.props.naviEdit('/vacations/' + this.props.vac.id);
   }
 
+}
+
+const mapStateToProps = function (state) {
+  return { isAdmin: state.isAdmin };
 }
 
 const mapDispatchToProps = dispatch => {
@@ -73,5 +85,5 @@ function delVacaFromServer(ev) {
   }
 }
 
-const aVac = connect(null, mapDispatchToProps)(AVac);
+const aVac = connect(mapStateToProps, mapDispatchToProps)(AVac);
 export default aVac;

@@ -19,10 +19,15 @@ const vacReducer = (state = initializeState, action) => {
             }
             return newState;
         case 'GET_VACAS':
-            newState = Object.assign({}, state, {
-                allVac: action.data,
-                isLoggedIn: true,
-            })
+                newState = {...state};
+                newState.allVac= action.data,
+                newState.date= new Date(),
+                newState.isLoggedIn= true,
+                newState.isLoggedIn=state.isLoggedIn
+            // newState = Object.assign({}, state, {
+            //     allVac: action.data,
+            //     isLoggedIn: true
+            // })
             return newState;
 
             case 'DELETE_V':
