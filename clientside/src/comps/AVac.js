@@ -18,7 +18,6 @@ class AVac extends Component {
       <div className="vaca">
         <div>
          {buttons}
-          
         </div>
         <h5>{this.props.vac.vac_destination}</h5>
         <p>{this.props.vac.vac_desc}</p>

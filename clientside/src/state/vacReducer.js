@@ -18,7 +18,7 @@ const vacReducer = (state = initializeState, action) => {
                 allVac: newVacationArr
             }
             return newState;
-        case 'GET_VACAS':
+        case 'GET_VACS':
                 newState = {...state};
                 newState.allVac= action.data,
                 newState.date= new Date(),
@@ -77,10 +77,9 @@ const vacReducer = (state = initializeState, action) => {
             return newState;
         case 'REG':
             if (action.data.msg == "OK") {
-                newState = {
-                    isLoggedIn: true,
-                    allVac: action.data
-                }
+                newState = {...state};
+                newState.date= new Date(),
+                newState.isLoggedIn= true
             }
 
             return newState;

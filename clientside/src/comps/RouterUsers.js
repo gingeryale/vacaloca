@@ -18,7 +18,7 @@ class RouterUsers extends Component {
         <div className="row">
             <Router>
                   <div>
-                      <ul>
+                  <ul className="nav">
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/vacations">All Vaca</Link></li>
                       <li><Link to="/login">login</Link></li>

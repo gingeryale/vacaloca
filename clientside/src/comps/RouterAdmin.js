@@ -20,7 +20,7 @@ class RouterAdmin extends Component {
         <div className="row">
           <Router>
             <div>
-              <ul>
+              <ul className="nav">
               <li>
                   <Link to="/">Home</Link>
                 </li>

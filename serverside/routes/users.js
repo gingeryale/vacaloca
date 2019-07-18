@@ -150,7 +150,7 @@ router.get('/follow/all/:id', async function (req, res, next) {
 router.post('/subs/:id', async function (req, res, next) { 
     let insertQuery= `INSERT into travel.subscribers(uid,vid) 
     VALUES ('${req.session.connectedUser.id}', '${req.params.id}')`;
-    console.log("llllllllllllllllllllllllparam id: => "+req.params.id);
+    console.log("param id: => "+req.params.id);
     let result = await pool.query(insertQuery); 
     res.json(result); 
 }); 

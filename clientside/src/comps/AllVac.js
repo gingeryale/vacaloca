@@ -45,7 +45,7 @@ function loadAllVacsFromServer() {
     let r = await fetch('http://localhost:3000/api/users/show');
     let jsonDATA = await r.json();
     console.log(jsonDATA);
-    dispatch({ type: "GET_VACAS", data: jsonDATA });
+    dispatch({ type: "GET_VACS", data: jsonDATA });
   }
 }
 const allvac = connect(mapStateToProps, mapDispatchToProps)(AllVac);

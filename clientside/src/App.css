@@ -1,5 +1,10 @@
 body{
   background-color:rgb(191, 253, 224);
+  font-size: 10px;
+}
+.container-fluid, .nomatch{
+  font-size: 1.2rem;
+  width:100%;
 }
 .App {
   text-align: center;
@@ -98,8 +103,11 @@ body{
 .nav{
   height: 25px;
   width:100%;
+  display: flex;
+  justify-content: flex-start;
 }
 .nav li{
   list-style-type: none;
   color:white;
+  margin-right:1rem;
 }
