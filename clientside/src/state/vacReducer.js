@@ -61,13 +61,12 @@ const vacReducer = (state = initializeState, action) => {
                 newState = {...state};
                 newState.date= new Date(),
                 newState.isLoggedIn= true,
-                newState.isAdmin= false
+                newState.isAdmin= true
                 }
              else {
                 newState = {...state};
                     newState.date= new Date(),
-                    newState.isLoggedIn= true,
-                    newState.isAdmin= false
+                    newState.isLoggedIn= true
                 }
             
             return newState;

@@ -72,6 +72,7 @@ router.get('/show', async function(req,res,next){
     if(req.session.connectedUser){
         let result = await pool.query(`SELECT * FROM travel.vacations left JOIN travel.subscribers ON vacations.id = subscribers.vid and subscribers.uid='${req.session.connectedUser.id}' ORDER BY subscribers.uid DESC`);
         res.json(result);
+        // for development only if/else
     } else {
         let result = await pool.query(`SELECT * FROM travel.vacations` )
         res.json(result);

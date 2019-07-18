@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   handleChange(e){
-      this.setState({[e.target.name]: e.target.value})
+      this.setState({[e.target.name]: e.target.value.toLowerCase()})
   }
   
  
@@ -52,7 +52,6 @@ function sendLoginData(loginData)  {
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});
       alert("hi "+ content.name);
-      
     }
   }      
 }
