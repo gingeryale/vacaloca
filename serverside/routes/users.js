@@ -113,7 +113,7 @@ router.post('/register', async function (req, res, next) {
 
 
 
-// GET all vacation subscribers
+// GET list all vacation subscribers by fk
 router.get('/follow/all', async function (req, res, next) { 
     if(req.session.connectedUser){
     let result = await pool.query(`SELECT * FROM travel.subscribers`); 
@@ -123,37 +123,36 @@ router.get('/follow/all', async function (req, res, next) {
 }); 
 
 
-// GET all vacation by uid id
-router.get('/follow/all/:id', async function (req, res, next) { 
-    if(req.session.connectedUser){
-        let result = await pool.query(`SELECT * FROM travel.subscribers WHERE 
-        vid IN (SELECT vid FROM travel.subscribers WHERE uid='${req.session.connectedUser.id}')`);
- 
-    res.json(result); } else {
-        res.redirect('/login');
-    }
-}); 
-
-// POST new vacation subscriber
-// router.post('/subs/:id', async function (req, res, next) { 
-//     req.session.connectedUser.id='8';
-//     let insertQuery= `INSERT INTO  travel.subscribers (vid, uid) 
-//     VALUES (${req.body.vid}, ${req.session.connectedUser.id})`; 
-//     let result = await pool.query(insertQuery); 
+// GET all vacation by user id
+// router.get('/follow/u/', async function (req, res, next) { 
+//         let result = await pool.query(`SELECT * FROM travel.vacations 
+//         CROSS JOIN travel.subscribers ON travel.vacations.id = travel.subscribers.vid 
+//         WHERE travel.subscribers.uid='${req.session.connectedUser.id}' `);
 //     res.json(result); 
 // }); 
 
-// `INSERT into travel.subscribers(uid,vid) 
-//     VALUES ("{req.session.connectedUser[travel.users.id]}","{req.body.vid}")`;
-
+// test only for dev uid=8
+router.get('/follow/t/', async function (req, res, next) { 
+    let result = await pool.query(`SELECT * FROM travel.vacations 
+    CROSS JOIN travel.subscribers ON travel.vacations.id = travel.subscribers.vid 
+    WHERE travel.subscribers.uid='12' `);
+res.json(result); 
+}); 
 
 router.post('/subs/:id', async function (req, res, next) { 
     let insertQuery= `INSERT into travel.subscribers(uid,vid) 
     VALUES ('${req.session.connectedUser.id}', '${req.params.id}')`;
     console.log("param id: => "+req.params.id);
     let result = await pool.query(insertQuery); 
-    res.json(result); 
+    res.status(200).json({ msg: 'OK' });
 }); 
+
+
+//delete follow of vacation
+router.delete('/subs/:vid', async function (req, res, next) {  
+    let result = await pool.query(`DELETE FROM travel.subscribers WHERE vid='${req.params.id}'  AND uid='${req.session.connectedUser.id}'`);  
+    res.status(200).json({ msg: 'OK' });
+});
 
 
 // get grouped by vacation count
@@ -168,17 +167,6 @@ router.get('/subs/rawcount', async function (req, res, next) {
         res.redirect('/login');
     }
 }); 
-
-// get names of vactions with 1 value for null
-// router.get('/subs/report1', async function (req, res, next) { 
-//     let result = await pool.query(`SELECT vacations.vac_destination, vacations.id, 
-//     count(*) as number_of_followers 
-//     from travel.vacations 
-//     left join travel.subscribers on (vacations.id = subscribers.vid) 
-//     group by vacations.vac_destination
-//     ORDER BY number_of_followers DESC`); 
-//     res.json(result); 
-// }); 
 
 // get names of vactions
 router.get('/subs/report', async function (req, res, next) { 

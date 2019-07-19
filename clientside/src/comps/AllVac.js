@@ -7,10 +7,12 @@ class AllVac extends Component {
 
   componentDidMount() {
     this.props.loadVacs();
+    this.props.loadFollows();
   }
 
   componentWillReceiveProps(){
-    this.props.allVacProps
+    this.props.allVacProps;
+    this.props.followprops;
   }
 
   render() {
@@ -32,14 +34,16 @@ const mapStateToProps = function (state) {
     followprops: state.following, loginState: state.isLoggedIn };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadVacs: function () {
-      return dispatch(loadAllVacsFromServer())
-    }
-  }
-}
 
+const mapDispatchToProps = dispatch => {
+  return {
+    loadVacs: () => {dispatch(loadAllVacsFromServer())},
+    loadFollows: () => {dispatch(loadAllFollowFromServer())}
+  };
+};
+
+
+// download all server vacations
 function loadAllVacsFromServer() {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/users/show');
@@ -48,5 +52,16 @@ function loadAllVacsFromServer() {
     dispatch({ type: "GET_VACS", data: jsonDATA });
   }
 }
+
+// download all the vacation user follows
+function loadAllFollowFromServer() {
+  return async function (dispatch) {
+    let r = await fetch('http://localhost:3000/api/users/follow/t'); // todo change back to u
+    let followDATA = await r.json();
+    console.log(followDATA);
+    dispatch({ type: "GET_FOLLOWS", data: followDATA });
+  }
+}
+
 const allvac = connect(mapStateToProps, mapDispatchToProps)(AllVac);
 export default allvac;

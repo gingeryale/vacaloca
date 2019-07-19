@@ -4,16 +4,43 @@ import { connect } from 'react-redux';
 
 
 class AVac extends Component {
+
+  componentDidMount() {
+    this.props.followprops;
+  }
+
+  componentWillReceiveProps(){
+    this.props.followprops;
+  }
+
   render() {
       let buttons;
+      
+      // check for admin status
       if(this.props.isAdmin==true){
         buttons = <div>
          <button onClick={this.gotovaca.bind(this)}>Edit</button>
           <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
         </div>
-      } else if (this.props.isAdmin==false){
-        buttons =<button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+      } 
+      else if (this.props.isAdmin==false)
+      {
+        let size = this.props.followprops.length;
+        debugger;
+        var arr = this.props.allVacsprops;
+        for(let i =0; i < size; i++){
+          if(arr[i] <= size ){
+            console.log("hhhhhhhhhhhhhhhhh");
+            console.log(arr[i]);
+             buttons=<button data-id={this.props.vac.id} onClick={this.props.followDel.bind(this)} vid={this.props.vac.id}>Unfollow</button>
+          } else {
+   buttons=<button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+          }
+
+        }
+        
       }
+
     return (
       <div className="vaca">
         <div>
@@ -37,13 +64,14 @@ class AVac extends Component {
 }
 
 const mapStateToProps = function (state) {
-  return { isAdmin: state.isAdmin };
+  return { isAdmin: state.isAdmin, followprops:state.following, allVacsprops:state.allVac };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     deleteV: (ev) => {dispatch(delVacaFromServer(ev))},
-    follow: (ev) => {dispatch(followVacationServer(ev))}
+    follow: (ev) => {dispatch(followVacationServer(ev))},
+    followDel: (ev) => {dispatch(delfollowVacationServer(ev))}
   };
 };
 
@@ -61,10 +89,29 @@ function followVacationServer(ev) {
     if(content.msg=='OK'){
       alert('following');
     }
-    dispatch({ type: "FOLLOW_V", data: fvid });
+    dispatch({ type: "FOLLOW_ADD", data: fvid });
   }
 }
 
+
+
+function delfollowVacationServer(ev) {
+  let fvid = ev.target.dataset.id;
+  return async function (dispatch) {
+    let r = await fetch(`http://localhost:3000/api/users/subs/${fvid}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    const content = await r.json();
+    if(content.msg=='OK'){
+      alert('deleted');
+    }
+    dispatch({ type: "FOLLOW_DEL", data: fvid });
+  }
+}
 
 function delVacaFromServer(ev) {
   let delid = ev.target.id;

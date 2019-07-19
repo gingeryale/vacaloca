@@ -13,11 +13,11 @@ class Register extends Component {
     return (
       <div className="form">
       <label>
-    Firstname:
+    First name:
     <input name="fname" onChange={this.handleChange.bind(this)} placeholder="firstname" required/>
   </label>
   <label>
-  lastname: 
+  last name: 
   <input name="lname" onChange={this.handleChange.bind(this)} placeholder="lastname" required/>
   </label>
        
