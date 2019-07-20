@@ -4,8 +4,8 @@ const initializeState = {
     }],
     following: [],
     reports: [{id: 0, vac_destination: "", trending: 0}],
-    isLoggedIn: true,
-    isAdmin: true,
+    isLoggedIn: false,
+    isAdmin: false,
     vprops: {}
 }
 const vacReducer = (state = initializeState, action) => {

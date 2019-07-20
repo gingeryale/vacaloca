@@ -15,7 +15,6 @@ class AVac extends Component {
 
   render() {
       let buttons;
-      
       // check for admin status
       if(this.props.isAdmin==true){
         buttons = <div>
@@ -23,30 +22,20 @@ class AVac extends Component {
           <button id={this.props.vac.id} onClick={this.props.deleteV.bind(this)}>Delete {this.props.vac.id}</button>
         </div>
       } 
-      else if (this.props.isAdmin==false)
-      {
-        let size = this.props.followprops.length;
-        debugger;
-        var arr = this.props.allVacsprops;
-        for(let i =0; i < size; i++){
-          if(arr[i] <= size ){
-            console.log("hhhhhhhhhhhhhhhhh");
-            console.log(arr[i]);
-             buttons=<button data-id={this.props.vac.id} onClick={this.props.followDel.bind(this)} vid={this.props.vac.id}>Unfollow</button>
-          } else {
-   buttons=<button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+      else if (this.props.isAdmin==false){
+        console.log(this.props.followprops);
+      buttons=<span>
+      <button data-id={this.props.vac.id} onClick={this.props.followDel.bind(this)} vid={this.props.vac.id}>Unfollow</button>
+      <button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
+      </span>
           }
-
-        }
-        
-      }
 
     return (
       <div className="vaca">
         <div>
          {buttons}
         </div>
-        <h5>{this.props.vac.vac_destination}</h5>
+        <h4>{this.props.vac.vac_destination}</h4>
         <p>{this.props.vac.vac_desc}</p>
         <p>{this.props.vac.vac_checkin}</p>
         <p>{this.props.vac.vac_checkout}</p>
