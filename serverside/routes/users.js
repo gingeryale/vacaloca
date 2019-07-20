@@ -156,17 +156,17 @@ router.delete('/subs/:vid', async function (req, res, next) {
 
 
 // get grouped by vacation count
-router.get('/subs/rawcount', async function (req, res, next) { 
-    if(req.session.connectedUser.name='ADMIN'){
-    let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
-    FROM travel.subscribers 
-    GROUP BY vid 
-    ORDER BY vcount DESC`); 
-    res.json(result); 
-    } else {
-        res.redirect('/login');
-    }
-}); 
+//router.get('/subs/rawcount', async function (req, res, next) { 
+    //if(req.session.connectedUser.name='ADMIN'){
+    // let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
+    // FROM travel.subscribers 
+    // GROUP BY vid 
+    // ORDER BY vcount DESC`); 
+    // res.json(result); 
+    //} else {
+    //    res.redirect('/login');
+    //}
+//}); 
 
 // get names of vactions
 router.get('/subs/report', async function (req, res, next) { 

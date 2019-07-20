@@ -3,8 +3,9 @@ const initializeState = {
     allVac: [{ id: 0, destination: "", desc: "", price: 0, checkin: "", checkout: "", img:{} 
     }],
     following: [],
-    isLoggedIn: false,
-    isAdmin: false,
+    reports: [{id: 0, vac_destination: "", trending: 0}],
+    isLoggedIn: true,
+    isAdmin: true,
     vprops: {}
 }
 const vacReducer = (state = initializeState, action) => {
@@ -22,13 +23,10 @@ const vacReducer = (state = initializeState, action) => {
                 newState = {...state};
                 newState.allVac= action.data,
                 newState.date= new Date(),
+                newState.reports=state.reports,
                 newState.isLoggedIn= true,
                 newState.following=state.following,
                 newState.isLoggedIn=state.isLoggedIn
-            // newState = Object.assign({}, state, {
-            //     allVac: action.data,
-            //     isLoggedIn: true
-            // })
             return newState;
             case 'DELETE_V':
             let prevArray = [...state.allVac];
@@ -109,6 +107,12 @@ const vacReducer = (state = initializeState, action) => {
                     isLoggedIn: true,
                     allVac: prevArray
                 }
+                return newState;
+                case 'CHARTS':
+                    debugger;
+                newState = {...state};
+                newState.reports= action.data
+                return newState;
         default:
             return state;
     }

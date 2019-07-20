@@ -9,6 +9,7 @@ import NoMatch from './404';
 import Login from './Login';
 import AdminEdit from './AdminEdit';
 import Home from './Home';
+import Charts from './Charts';
 
 
 
@@ -33,6 +34,9 @@ class RouterAdmin extends Component {
                 <li>
                   <Link to="/addvacation">Add Vaca</Link>
                 </li>
+                <li>
+                  <Link to="/charts">Charts</Link>
+                </li>
               </ul>
 
               <Switch>
@@ -48,6 +52,9 @@ class RouterAdmin extends Component {
                   <AddVac {...props} />} />
                
                 <Route exact path='/' render={(props) => <Home {...props}/>} />
+
+                <Route path='/charts' render={(props) => 
+              <Charts {...props} history={this.props.history}/>}/>
 
                 <Route component={NoMatch} />
               </Switch>
