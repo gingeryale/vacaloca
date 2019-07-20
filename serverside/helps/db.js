@@ -21,7 +21,7 @@ var myDbHelper = {
                 console.log(data);
             });
             let createVacations = `CREATE TABLE IF NOT EXISTS travel.vacations (id INT(11) AUTO_INCREMENT PRIMARY KEY, 
-                vac_destination VARCHAR(16), vac_desc VARCHAR(128), vac_price INT(16), vac_checkin VARCHAR(16), 
+                vac_destination VARCHAR(32), vac_desc VARCHAR(128), vac_price INT(16), vac_checkin VARCHAR(16), 
                 vac_checkout VARCHAR(16), vac_img LONGTEXT)`;
             pool.query(createVacations).then(data => {
                 console.log(data);

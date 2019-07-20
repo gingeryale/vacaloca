@@ -109,7 +109,6 @@ const vacReducer = (state = initializeState, action) => {
                 }
                 return newState;
                 case 'CHARTS':
-                    debugger;
                 newState = {...state};
                 newState.reports= action.data
                 return newState;
