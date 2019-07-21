@@ -29,21 +29,18 @@ class RouterAdmin extends Component {
                   <Link to="/vacations">All Vacations</Link>
                 </li>
                 <li>
-                  <Link onClick={this.logout.bind(this)} to="/login">Logout</Link>
-                </li>
-                <li>
                   <Link to="/addvacation">Add Vaca</Link>
                 </li>
                 <li>
                   <Link to="/charts">Charts</Link>
                 </li>
+                <li>
+                  <Link onClick={this.logout.bind(this)} to="/login">Logout</Link>
+                </li>
               </ul>
 
               <Switch>
               <Route exact path='/vacations/:vid' render={(props) => <AdminEdit {...props}/>} />
-              
-              <Route path='/login' render={(props) => 
-              <Login {...props} history={this.props.history}/>}/>
 
                 <Route excat path='/vacations' render={(props) =>
                   <AllVac {...props} />} />
@@ -55,6 +52,9 @@ class RouterAdmin extends Component {
 
                 <Route path='/charts' render={(props) => 
               <Charts {...props} history={this.props.history}/>}/>
+              
+               <Route path='/login' render={(props) => 
+              <Login {...props} history={this.props.history}/>}/>
 
                 <Route component={NoMatch} />
               </Switch>

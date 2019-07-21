@@ -12,7 +12,7 @@ class App extends Component {
     if(this.props.isLoggedIn==true && this.props.isAdmin==true){
     return (
       <div>
-      <h2>Hello {this.props.sayHello}, the place is all yours</h2>
+      <h2>Hello {this.props.sayHello} , the place is all yours</h2>
       <RouterAdmin />
       </div>
     );
