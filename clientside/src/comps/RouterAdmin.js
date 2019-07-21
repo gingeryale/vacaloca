@@ -29,7 +29,7 @@ class RouterAdmin extends Component {
                   <Link to="/vacations">All Vacations</Link>
                 </li>
                 <li>
-                  <Link to="/login">Login</Link>
+                  <Link onClick={this.logout.bind(this)} to="/login">Logout</Link>
                 </li>
                 <li>
                   <Link to="/addvacation">Add Vaca</Link>
@@ -71,12 +71,11 @@ class RouterAdmin extends Component {
       </div>
     );
   }
+  logout() {
+    window.location.replace('/');
+  }
 }
-function logout(e) {
-  e.preventDefault(); // prevent page transition
-  fetch('http://localhost:3000/api/users/logout', { method: 'GET' }).then(() =>
-    console.log('end'))
-}
+
 
 
 export default RouterAdmin;

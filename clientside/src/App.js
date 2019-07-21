@@ -12,7 +12,7 @@ class App extends Component {
     if(this.props.isLoggedIn==true && this.props.isAdmin==true){
     return (
       <div>
-      <h2>Hello {this.props.sayHello}</h2>
+      <h2>Hello {this.props.sayHello}, the place is all yours</h2>
       <RouterAdmin />
       </div>
     );
@@ -20,7 +20,7 @@ class App extends Component {
     else if(this.props.isLoggedIn==true && this.props.isAdmin==false){
       return(
         <div>
-        <h2>Hello {this.props.sayHello}</h2>
+        <h2>Hello {this.props.sayHello} checkout our reactive travel deals</h2>
         <RouterUsers />
         </div>
       )
@@ -28,7 +28,7 @@ class App extends Component {
     else{
       return(
         <div>
-        <h2>Hello Guest</h2>
+        <h2>Hello Guest, you must be a registered member to see our reactive deals</h2>
         <RouterGuest />
         </div>
       )

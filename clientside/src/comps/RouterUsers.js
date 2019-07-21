@@ -21,7 +21,7 @@ class RouterUsers extends Component {
                   <ul className="nav">
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/vacations">All Vaca</Link></li>
-                      <li><Link to="/login">login</Link></li>
+                      <li><Link onClick={this.logout.bind(this)} to="/login">logout</Link></li>
                       </ul>
 
                      <Switch>
@@ -50,13 +50,10 @@ class RouterUsers extends Component {
     </div>
     );
   }
+  logout() {
+    window.location.replace('/');
+  }
 }
 
-function logout(event) {
-    event.preventDefault(); // prevent page transition
-    fetch('http://localhost:3000/api/users/logout', { method: 'POST' }).then(() =>
-      window.location.reload() // stay at the same url
-    )
-  }
 
 export default RouterUsers;

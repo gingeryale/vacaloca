@@ -13,7 +13,6 @@ class Login extends Component {
         <button onClick={this.props.sendLogin.bind(this, this.state)}>Login</button>
         <br />
         <br />
-        <p className="link"><Link to="/register">To Become Registered</Link></p>
       </div>
     );
   }
@@ -52,7 +51,6 @@ function sendLoginData(loginData)  {
     console.log(content);
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});
-      alert("hi "+ content.name);
     }
   }      
 }
