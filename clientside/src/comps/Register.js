@@ -40,7 +40,7 @@ class Register extends Component {
   }
   
   handleChange(e){
-      this.setState({[e.target.name]: e.target.value.trim()})
+      this.setState({[e.target.name]: e.target.value.toLowerCase().trim()})
   }
 
   async once()

@@ -24,7 +24,7 @@ router.post('/login', async (req, res, next)=> {
     await pool.query(`SELECT * FROM travel.users WHERE user_name='${name}' AND user_pass='${pass}'`); 
     if(userArr.length > 0){
         req.session.connectedUser = userArr[0];
-        res.json({msg:"OK", name:`${name}`});
+        res.json({msg:"OK", name:`${req.session.connectedUser.user_fname}`});
     }else{
         res.json({msg:"NOT CONNECTED"});
     }

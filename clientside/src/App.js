@@ -11,24 +11,33 @@ class App extends Component {
   render() {
     if(this.props.isLoggedIn==true && this.props.isAdmin==true){
     return (
+      <div>
+      <h2>Hello {this.props.sayHello}</h2>
       <RouterAdmin />
+      </div>
     );
     }
     else if(this.props.isLoggedIn==true && this.props.isAdmin==false){
       return(
+        <div>
+        <h2>Hello {this.props.sayHello}</h2>
         <RouterUsers />
+        </div>
       )
     }
     else{
       return(
+        <div>
+        <h2>Hello Guest</h2>
         <RouterGuest />
+        </div>
       )
     }
   }
 }
 
 const mapStateToProps = function (state) {
-  return { isLoggedIn: state.isLoggedIn, isAdmin: state.isAdmin };
+  return { isLoggedIn: state.isLoggedIn, isAdmin: state.isAdmin, sayHello:state.hello };
 }
 
 const app = connect(mapStateToProps, null)(App);

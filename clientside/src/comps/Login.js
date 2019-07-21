@@ -48,6 +48,7 @@ function sendLoginData(loginData)  {
       body: JSON.stringify(loginData)
     });
     const content = await r.json();
+    console.log("login llllllllllllllllllllllllllllllllllllllll");
     console.log(content);
     if(content.msg=="OK"){
       dispatch({type:"LOGIN", data: content});

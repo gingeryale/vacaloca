@@ -6,7 +6,8 @@ const initializeState = {
     reports: [{id: 0, vac_destination: "", trending: 0}],
     isLoggedIn: false,
     isAdmin: false,
-    vprops: {}
+    vprops: {},
+    hello:""
 }
 const vacReducer = (state = initializeState, action) => {
     switch (action.type) {
@@ -64,12 +65,14 @@ const vacReducer = (state = initializeState, action) => {
                 newState = {...state};
                 newState.date= new Date(),
                 newState.isLoggedIn= true,
-                newState.isAdmin= true
+                newState.isAdmin= true,
+                newState.hello= action.data.name
                 }
              else {
                 newState = {...state};
                     newState.date= new Date(),
-                    newState.isLoggedIn= true
+                    newState.isLoggedIn= true,
+                    newState.hello= action.data.name
                 }
             
             return newState;
@@ -77,7 +80,8 @@ const vacReducer = (state = initializeState, action) => {
             if (action.data.msg == "OK") {
                 newState = {...state};
                 newState.date= new Date(),
-                newState.isLoggedIn= true
+                newState.isLoggedIn= true,
+                newState.hello= action.data.name
             }
             return newState;
             case 'GET_FOLLOWS':
