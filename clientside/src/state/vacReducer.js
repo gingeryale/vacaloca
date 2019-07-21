@@ -87,25 +87,25 @@ const vacReducer = (state = initializeState, action) => {
                 newState.isLoggedIn= true
             return newState;
             case 'FOLLOW_ADD':
-                let newFollowArr = [...state.following];
-                prevArray = [...state.allVac];
-                newFollowArr.push(action.data);
+                newVacationArr = [...state.following];
+                newVacationArr.push(action.data);
                 newState = {
                     date: new Date(),
-                    following: newFollowArr,
-                    allVac: prevArray,
-                    isLoggedIn: true
+                    isLoggedIn: true,
+                    isAdmin: false,
+                    allVac: state.allVac,
+                    following: newVacationArr
                 }
                 return newState;
             case 'FOLLOW_DEL':
                 let prevFollowArr = [...state.following];
-                prevArray = [...state.allVac];
                 prevFollowArr.splice(prevFollowArr.filter(el => el.id !== action.data),1);
                 newState = {
                     date: new Date(),
                     following: prevFollowArr,
                     isLoggedIn: true,
-                    allVac: prevArray
+                    isAdmin:false,
+                    allVac: state.allVac
                 }
                 return newState;
                 case 'CHARTS':

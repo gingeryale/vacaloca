@@ -18,13 +18,11 @@ var myDbHelper = {
                 user_fname VARCHAR(255),user_lname VARCHAR(255),user_name VARCHAR(255),
                 user_pass VARCHAR(255))`;
             pool.query(createUsers).then(data => {
-                console.log(data);
             });
             let createVacations = `CREATE TABLE IF NOT EXISTS travel.vacations (id INT(11) AUTO_INCREMENT PRIMARY KEY, 
                 vac_destination VARCHAR(32), vac_desc VARCHAR(128), vac_price INT(16), vac_checkin VARCHAR(16), 
                 vac_checkout VARCHAR(16), vac_img LONGTEXT)`;
             pool.query(createVacations).then(data => {
-                console.log(data);
             });
             let createSubs = `CREATE TABLE IF NOT EXISTS travel.subscribers 
             (sid INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -34,7 +32,6 @@ var myDbHelper = {
             FOREIGN KEY (vid) REFERENCES travel.vacations(id) ON DELETE CASCADE
              )`;
             pool.query(createSubs).then(data => {
-                console.log(data);
             });
         });
     },

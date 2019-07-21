@@ -28,6 +28,8 @@ class RouterUsers extends Component {
                       history={this.props.history}/>}/>
                       <Route path='/register' render={(props) => <Register {...props} />}/>
                       
+                      <Route excat path='/vacations' render={(props) =>
+                  <Home {...props} />} />
 
                 <Route exact path='/' render={(props) => <Home {...props}/>} />
                       <Route component={NoMatch} />

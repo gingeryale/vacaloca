@@ -48,7 +48,6 @@ function loadAllVacsFromServer() {
   return async function (dispatch) {
     let r = await fetch('http://localhost:3000/api/users/show');
     let jsonDATA = await r.json();
-    console.log(jsonDATA);
     dispatch({ type: "GET_VACS", data: jsonDATA });
   }
 }
@@ -56,9 +55,8 @@ function loadAllVacsFromServer() {
 // download all the vacation user follows
 function loadAllFollowFromServer() {
   return async function (dispatch) {
-    let r = await fetch('http://localhost:3000/api/users/follow/t'); // todo change back to u
+    let r = await fetch('http://localhost:3000/api/users/follow/u');
     let followDATA = await r.json();
-    console.log(followDATA);
     dispatch({ type: "GET_FOLLOWS", data: followDATA });
   }
 }

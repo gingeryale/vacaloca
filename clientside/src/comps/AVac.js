@@ -23,7 +23,6 @@ class AVac extends Component {
         </div>
       } 
       else if (this.props.isAdmin==false){
-        console.log(this.props.followprops);
       buttons=<span>
       <button data-id={this.props.vac.id} onClick={this.props.followDel.bind(this)} vid={this.props.vac.id}>Unfollow</button>
       <button data-id={this.props.vac.id} onClick={this.props.follow.bind(this)} vid={this.props.vac.id}>Follow</button>
@@ -64,6 +63,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+// USER FOLLOW
 function followVacationServer(ev) {
   let fvid = ev.target.dataset.id;
   return async function (dispatch) {
@@ -83,7 +83,7 @@ function followVacationServer(ev) {
 }
 
 
-
+// USER UNFOLLOW
 function delfollowVacationServer(ev) {
   let fvid = ev.target.dataset.id;
   return async function (dispatch) {
@@ -102,6 +102,7 @@ function delfollowVacationServer(ev) {
   }
 }
 
+// ADMIN ONLY DELETE VACATION
 function delVacaFromServer(ev) {
   let delid = ev.target.id;
   return async function (dispatch) {
