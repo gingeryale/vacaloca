@@ -4,20 +4,7 @@ var myDbHelper = require('../helps/db');
 
 var pool= myDbHelper.myPool;
 
-// login cookie
-//router.post('/login', async function (req, res, next) { 
-//    let result = await pool.query(`SELECT * FROM travel.users WHERE user.name = ${req.body.user}`);
-//    if(result.length > 0){
-//        req.session.user = results[0];
-//        res.json(result); // msg:"connected"
-//    } else {
-//        res.json({msg:"not connected"});
-//    }
-   
-//});
-
 router.post('/login', async (req, res, next)=> {
-    console.log(req.body);
     let name=req.body.name;
     let pass=req.body.pass;
     let userArr = 
@@ -30,19 +17,6 @@ router.post('/login', async (req, res, next)=> {
     }
 }); 
 
-router.get('/logout', function(req,res, next){
-    if (req.session) {
-        // delete session object
-        req.session.destroy(function(err) {
-          if(err) {
-            return next(err);
-          } else {
-            return res.redirect('/');
-          }
-        });
-      }
-    
-   });
 
 // session cookie
 router.get('/api', async function (req, res, next) { 
@@ -73,10 +47,8 @@ router.get('/show', async function(req,res,next){
         left JOIN travel.subscribers ON vacations.id = subscribers.vid and 
         subscribers.uid='${req.session.connectedUser.id}' ORDER BY subscribers.uid DESC`);
         res.json(result);
-        // for development only if/else
     } else {
-        let result = await pool.query(`SELECT * FROM travel.vacations` )
-        res.json(result);
+        res.redirect('/login');
     }
    
 });
@@ -124,7 +96,7 @@ router.get('/follow/all', async function (req, res, next) {
 }); 
 
 
-// GET all vacation by user id
+// GET all follow vacation by user id
 router.get('/follow/u/', async function (req, res, next) { 
     if(req.session.connectedUser){
         let result = await pool.query(`SELECT * FROM travel.vacations 
@@ -137,7 +109,7 @@ router.get('/follow/u/', async function (req, res, next) {
 }); 
 
 
-// Stest only for dev uid=8
+// test only for dev uid=8
 // router.get('/follow/t/', async function (req, res, next) { 
 //     let result = await pool.query(`SELECT * FROM travel.vacations 
 //     CROSS JOIN travel.subscribers ON travel.vacations.id = travel.subscribers.vid 
