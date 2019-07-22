@@ -40,12 +40,12 @@ router.put('/:id', async function (req, res, next) {
 
 // delete by params id
 router.delete('/:id', async function (req, res, next) { 
-    if(req.session.connectedUser){  
+    // if(req.session.connectedUser){  
     let result = await pool.query(`DELETE FROM travel.vacations WHERE id=${req.params.id}`);  
     res.status(200).json({ msg: 'OK' });
-    } else {
-        res.redirect('/');
-    }
+    // } else {
+    //     res.redirect('/');
+    // }
 });
 
 

@@ -30,14 +30,14 @@ const vacReducer = (state = initializeState, action) => {
                 newState.isLoggedIn=state.isLoggedIn
             return newState;
             case 'DELETE_V':
-            let prevArray = [...state.allVac];
-            prevArray.splice(prevArray.filter(el => el.id !== action.data),1);
-            newState = {
-                date: new Date(),
-                isLoggedIn: true,
-                allVac: prevArray,
-                isAdmin:true
-            }
+                newState = {...state};
+                let prevArray = [...state.allVac];
+                prevArray.splice(prevArray.filter(el => el.id !== action.data),1);
+                newState.date= new Date(),
+                newState.isLoggedIn= true,
+                newState.isAdmin= true,
+                newState.hello= action.data.name,
+                newState.allVac = prevArray
             return newState;
             case 'LOAD_V':
             prevArray = [...state.allVac];
