@@ -175,7 +175,7 @@ router.delete('/subs/:vid', async function (req, res, next) {
 
 // get grouped by raw vacation count+id
 router.get('/subs/rawcount', async function (req, res, next) { 
-    if(req.session.connectedUser.name='admin'){
+    if(req.session.connectedUser){
     let result = await pool.query(`SELECT vid, COUNT(*) as vcount 
     FROM travel.subscribers 
     GROUP BY vid 

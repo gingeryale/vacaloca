@@ -22,7 +22,7 @@ router.get('/:id', async function (req, res, next) {
 
 // edit vacation by params id
 router.put('/:id', async function (req, res, next) {
-    if(req.session.connectedUser.user_name='admin'){ 
+    if(req.session.connectedUser){ 
         let insertQuery = `UPDATE travel.vacations SET 
         vac_destination = '${req.body.destination}',
         vac_desc ='${req.body.desc}',
@@ -40,7 +40,7 @@ router.put('/:id', async function (req, res, next) {
 
 // delete by params id
 router.delete('/:id', async function (req, res, next) { 
-    if(req.session.connectedUser.user_name='admin'){  
+    if(req.session.connectedUser){  
     let result = await pool.query(`DELETE FROM travel.vacations WHERE id=${req.params.id}`);  
     res.status(200).json({ msg: 'OK' });
     } else {
@@ -51,7 +51,7 @@ router.delete('/:id', async function (req, res, next) {
 
 // add new vacation
 router.post('/', async function (req, res, next) {
-    if(req.session.connectedUser.user_name=='admin'){ 
+    if(req.session.connectedUser){ 
         let insertQuery = ` INSERT INTO  travel.vacations (vac_destination,vac_desc,vac_price,vac_checkin,vac_checkout, vac_img) 
     VALUES ('${req.body.destination}','${req.body.desc}',${req.body.price},'${req.body.checkin}',
     '${req.body.checkout}', '${req.body.img}')`;
