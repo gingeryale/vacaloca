@@ -34,4 +34,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/vacations', meetVaca);
 
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/public/index.html'));
+});
 module.exports = app;
