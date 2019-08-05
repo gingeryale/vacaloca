@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
-import { Link } from "react-router-dom";
 
 
 class Register extends Component {
   state={
     nameArr:[],
-    visible:false
+    visible:false,
+    allvacation: this.props.allvacation
   }
+
+  componentWillReceiveProps(){
+    this.props.allvacation;
+  }
+
+
   render() {
     return (
       <div className="form">
@@ -64,6 +70,10 @@ class Register extends Component {
 }
 
 
+const mapStateToProps = function(state){
+  return {allvacation: state.allVac};
+}
+
 
 function mapDispatchToProps(dispatch){
   return{
@@ -78,7 +88,7 @@ function mapDispatchToProps(dispatch){
       } else {
         this.setState({disabledState:true});
         this.setState({visible:false});
-        return dispatch(saveUserToServer(regData))
+        return dispatch(saveUserToServer(regData));
       }
     }
   }
@@ -98,15 +108,13 @@ function saveUserToServer(regData) {
     console.log(content);
     if(content.msg=="OK"){
       dispatch({type:"REG", data: content});
-      alert("you're registered " + content.name)
-        this.props.history.push({
-          pathname: '/vacations',
-        });
+      alert("you're registered " + content.name);
+       
     }else{
-      this.props.history.push('/login');
+      alert("error")
     }
   }      
 }
 
-const register = connect(null, mapDispatchToProps)(Register);
+const register = connect(mapStateToProps, mapDispatchToProps)(Register);
 export default register;

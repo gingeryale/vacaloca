@@ -77,8 +77,10 @@ const vacReducer = (state = initializeState, action) => {
             
             return newState;
         case 'REG':
+            debugger;
             if (action.data.msg == "OK") {
                 newState = {...state};
+                newState.allVac= state.allVac,
                 newState.date= new Date(),
                 newState.isLoggedIn= true,
                 newState.hello= action.data.name
