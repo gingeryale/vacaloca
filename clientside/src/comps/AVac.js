@@ -8,6 +8,9 @@ class AVac extends Component {
   componentWillReceiveProps() {}
 
   render() {
+    var divStyle = {
+      backgroundImage: "url(" + this.props.vac.vac_img + ")"
+    };
     let buttons;
     // check for admin status
     if (this.props.isAdmin == true) {
@@ -51,16 +54,18 @@ class AVac extends Component {
     }
 
     return (
-      <div className="vaca">
-        <div>{buttons}</div>
-        <h4>{this.props.vac.vac_destination}</h4>
-        <p>{this.props.vac.vac_desc}</p>
-        <p>{this.props.vac.vac_checkin}</p>
-        <p>{this.props.vac.vac_checkout}</p>
-        <p>{this.props.vac.vac_price}</p>
-        <p>
-          <img src={this.props.vac.vac_img} />
-        </p>
+      <div className="vaca" style={divStyle}>
+        <div className="vacaInner">
+          <div>{buttons}</div>
+          <h3>{this.props.vac.vac_destination}</h3>
+          <p>{this.props.vac.vac_desc}</p>
+          <p>{this.props.vac.vac_checkin}</p>
+          <p>{this.props.vac.vac_checkout}</p>
+          <p>${this.props.vac.vac_price}</p>
+          <p>
+            <img src={this.props.vac.vac_img} />
+          </p>
+        </div>
       </div>
     );
   }

@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
-import '../App.css';
-import { connect } from 'react-redux';
-import AVac from './AVac';
+import React, { Component } from "react";
+import "../App.css";
+import { connect } from "react-redux";
+import AVac from "./AVac";
 
 class AllVac extends Component {
-
   componentDidMount() {
     this.props.loadVacs();
-    this.props.loadFollows();
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps() {
     this.props.allVacProps;
-    this.props.followprops;
   }
 
   render() {
@@ -22,44 +19,43 @@ class AllVac extends Component {
           <p>time: {this.props.dateprops.toLocaleString()}</p>
         </div>
         <div className="vcontain">
-        {this.props.allVacProps.map(v => <AVac vac={v} key={v.id} naviEdit={this.props.history.push} />)}
+          {this.props.allVacProps.map(v => (
+            <AVac vac={v} key={v.id} naviEdit={this.props.history.push} />
+          ))}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = function (state) {
-  return { dateprops: state.date, allVacProps: state.allVac, 
-    followprops: state.following, loginState: state.isLoggedIn };
-}
-
-
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = function(state) {
   return {
-    loadVacs: () => {dispatch(loadAllVacsFromServer())},
-    loadFollows: () => {dispatch(loadAllFollowFromServer())}
+    dateprops: state.date,
+    allVacProps: state.allVac,
+    followprops: state.following,
+    loginState: state.isLoggedIn
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    loadVacs: () => {
+      dispatch(loadAllVacsFromServer());
+    }
+  };
+};
 
 // download all server vacations
 function loadAllVacsFromServer() {
-  return async function (dispatch) {
-    let r = await fetch('http://localhost:3000/api/users/show');
+  return async function(dispatch) {
+    let r = await fetch("http://localhost:3000/api/users/show");
     let jsonDATA = await r.json();
     dispatch({ type: "GET_VACS", data: jsonDATA });
-  }
+  };
 }
 
-// download all the vacation user follows
-function loadAllFollowFromServer() {
-  return async function (dispatch) {
-    let r = await fetch('http://localhost:3000/api/users/follow/u');
-    let followDATA = await r.json();
-    dispatch({ type: "GET_FOLLOWS", data: followDATA });
-  }
-}
-
-const allvac = connect(mapStateToProps, mapDispatchToProps)(AllVac);
+const allvac = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllVac);
 export default allvac;
